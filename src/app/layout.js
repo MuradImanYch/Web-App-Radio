@@ -1,12 +1,12 @@
+import Link from "next/link";
 import "./globals.css";
-import Filter from "./components/Filter/Filter";
+import Filter from "@/components/Filter/Filter";
 
-export default async function RootLayout({ children }) {
   const fetchCountries = async () => {
     try {
-      const response = await fetch('https://de1.api.radio-browser.info/json/countries');
-      const data = await response.json();
-      return data;
+      // const response = await fetch('https://de1.api.radio-browser.info/json/countries');
+      // const data = await response.json();
+      // return data;
     } catch (error) {
       console.error(error);
       return [];
@@ -15,9 +15,9 @@ export default async function RootLayout({ children }) {
 
   const fetchLanguage = async () => {
     try {
-      const response = await fetch('https://de1.api.radio-browser.info/json/languages');
-      const data = await response.json();
-      return data;
+      // const response = await fetch('https://de1.api.radio-browser.info/json/languages');
+      // const data = await response.json();
+      // return data;
     } catch (error) {
       console.error(error);
       return [];
@@ -26,15 +26,16 @@ export default async function RootLayout({ children }) {
 
   const fetchTags = async () => {
     try {
-      const response = await fetch('https://de1.api.radio-browser.info/json/tags');
-      const data = await response.json();
-      return data;
+      // const response = await fetch('https://de1.api.radio-browser.info/json/tags');
+      // const data = await response.json();
+      // return data;
     } catch (error) {
       console.error(error);
       return [];
     }
   };
 
+export default async function RootLayout({ children }) {
   const countries = await fetchCountries();
   const language = await fetchLanguage();
   const tags = await fetchTags();
@@ -42,7 +43,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <h1>Web Radio</h1>
+        <Link href={'/'} className="logo">LOGO Web RADIO</Link>
         <Filter countries={countries} language={language} tags={tags} />
         {children}
       </body>

@@ -6,10 +6,10 @@ const Filter = ({ countries, language, tags }) => {
         <div className='filter'>
             <input type="text" placeholder='Search for a station' />
             <div className="select-opt">
-                <Countries countries={countries} />
+                {/* <Countries countries={countries} /> */}
                 <select name="languages" id="">
                     <option value="null">All languages</option>
-                    {language.map((lang, i) => (
+                    {language?.map((lang, i) => (
                         <option key={lang.iso_639 + i} value={lang.iso_639}>
                             {lang.name}
                         </option>
@@ -17,7 +17,7 @@ const Filter = ({ countries, language, tags }) => {
                 </select>
                 <select name="tags" id="">
                     <option value="null">All tags</option>
-                    {tags.map((tag, i) => (
+                    {tags?.map((tag, i) => (
                         <option key={tag.name + i} value={tag.name}>
                             {tag.name}
                         </option>

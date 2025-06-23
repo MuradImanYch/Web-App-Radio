@@ -53,8 +53,10 @@ const Countries = ({ countries }) => {
                 : allCountriesOption.flag
             }
             alt={selected.name}
+            title={selected.name}
             width={20}
             height={20}
+            placeholder={'empty'}
           />
           <span>{selected.name}</span>
         </div>
@@ -85,6 +87,8 @@ const Countries = ({ countries }) => {
                 alt={country.name}
                 width={20}
                 height={20}
+                placeholder={'empty'}
+                title={'empty'}
               />
               <span>{country.name}</span>
             </div>
