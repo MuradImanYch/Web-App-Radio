@@ -5,6 +5,45 @@ import radioIco from '../../../public/radioIco.png'
 
 const Main = () => {
     const topRadio = [
+      {
+    "changeuuid": "9c558331-be05-4812-b844-fb88d4d6b9cb",
+    "stationuuid": "34800c3f-87a1-4e77-932c-21bfc89a325d",
+    "serveruuid": "05385b79-1041-472c-a225-9bd5ea9ccc3b",
+    "name": "Media Fm 105.5",
+    "url": "https://icecast.livetv.az/mediafm",
+    "url_resolved": "https://icecast.livetv.az/mediafm",
+    "homepage": "https://icecast.livetv.az/mediafm",
+    "favicon": "",
+    "tags": "",
+    "country": "Azerbaijan",
+    "countrycode": "AZ",
+    "iso_3166_2": "",
+    "state": "",
+    "language": "azerbaijani",
+    "languagecodes": "az",
+    "votes": 1346,
+    "lastchangetime": "2025-06-13 00:13:57",
+    "lastchangetime_iso8601": "2025-06-13T00:13:57Z",
+    "codec": "MP3",
+    "bitrate": 192,
+    "hls": 0,
+    "lastcheckok": 1,
+    "lastchecktime": "2025-06-24 07:16:00",
+    "lastchecktime_iso8601": "2025-06-24T07:16:00Z",
+    "lastcheckoktime": "2025-06-24 07:16:00",
+    "lastcheckoktime_iso8601": "2025-06-24T07:16:00Z",
+    "lastlocalchecktime": "2025-06-24 03:53:19",
+    "lastlocalchecktime_iso8601": "2025-06-24T03:53:19Z",
+    "clicktimestamp": "2025-06-23 23:09:58",
+    "clicktimestamp_iso8601": "2025-06-23T23:09:58Z",
+    "clickcount": 30,
+    "clicktrend": 0,
+    "ssl_error": 0,
+    "geo_lat": null,
+    "geo_long": null,
+    "geo_distance": null,
+    "has_extended_info": false
+  },
   {
     "changeuuid": "9e8c5269-7ae0-48ef-96b4-b75b84a83469",
     "stationuuid": "98adecf7-2683-4408-9be7-02d3f9098eb8",
@@ -337,15 +376,15 @@ const Main = () => {
                     <div className="top">
                         <Image width={100} height={100} src={radioIco} title={station.name} alt={station.name} placeholder={'empty'} />
                         <p>
-                            <span className="station-name">{station.name}</span>
-                            <span className="station-country"><span>Country: </span> {station.country}</span>
-                            <span className="station-language"><span>Language:</span> {station.language}</span>
+                            {station.name ? <span className="station-name">{station.name}</span> : 'Unknown station'}
+                            {station.country ? <span className="station-country"><span>Country: </span> {station.country}</span> : 'Unknown country'}
+                            {station.language ? <span className="station-language"><span>Language:</span> {station.language}</span> : 'Unknown language'}
                         </p>
                     </div>
-                    <span className="station-tags"><span>Tags:</span> {station.tags.split(',').map((tag, i) => {
+                    {station.tags ? <span className="station-tags"><span>Tags:</span> {station.tags.split(',').map((tag, i) => {
                       return <div key={tag + '-' + i} className="tag">{tag}</div>
-                    })}</span>
-                    <Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name)}><button>Play</button></Link>
+                    })}</span> : 'No tags available'}
+                    <div className='playBtn'><Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name)}><button>Play</button></Link></div>
                     {/* <audio controls>
                     <source src={station.url_resolved} type="audio/mpeg" />
                     Your browser does not support audio.

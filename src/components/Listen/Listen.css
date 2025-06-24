@@ -1,0 +1,15 @@
+.listen-container .tag {
+  font-size: 0.8em;
+  background: #f43f5e;
+  margin: 3px;
+  color: #fff;
+  padding: 3px 5px;
+  display: inline-block;
+  border-radius: 8px;
+}
+.listen-container .tags {
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

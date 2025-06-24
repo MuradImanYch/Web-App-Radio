@@ -45,8 +45,14 @@ a {
 }
 
 /*------------------------------------------*/
-
 h1 {
   color: #dda9d4;
   text-align: center;
+}
+.logoWrap {
+  text-align: center;
+}
+.logoWrap a {
+  text-align: center;
+  font-size: 2em;
 }

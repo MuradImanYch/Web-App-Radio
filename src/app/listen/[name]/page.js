@@ -1,6 +1,6 @@
 import Listen from "@/components/Listen/Listen";
 
-const topRadio = [
+/* const topRadio = [
   {
     stationuuid: "98adecf7-2683-4408-9be7-02d3f9098eb8",
     name: "BBC World Service",
@@ -29,11 +29,10 @@ function generateSlug(text) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 }
-
+ */
 const page = ({ params }) => {
-  const { name } = params;
 
-  const found = topRadio.find((station) => {
+  /* const found = topRadio.find((station) => {
     const fullSlug = `${generateSlug(station.country)}-${generateSlug(station.name)}`;
     return fullSlug === name;
   });
@@ -45,20 +44,20 @@ const page = ({ params }) => {
         <p>Find by: <code>{name}</code></p>
       </div>
     );
-  }
+  } */
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>{found.name}</h1>
+      {/* <h1>{found.name}</h1>
       <p><strong>Country:</strong> {found.country}</p>
       <p><strong>Stream URL:</strong> <a href={found.url_resolved} target="_blank">{found.url_resolved}</a></p>
 
       <audio controls style={{ marginTop: 20 }}>
         <source src={found.url_resolved} type="audio/mpeg" />
         Your browser does not support the audio element.
-      </audio>
+      </audio> */}
 
-      <Listen />
+      <Listen pathname={params.name} />
     </div>
   );
 };

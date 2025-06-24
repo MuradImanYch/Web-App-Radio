@@ -43,7 +43,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Link href={'/'} className="logo">LOGO Web RADIO</Link>
+        <div className="logoWrap"><Link href={'/'} className="logo">LOGO Web RADIO</Link></div>
         <Filter countries={countries} language={language} tags={tags} />
         {children}
       </body>
