@@ -1,6 +1,7 @@
 import React from 'react';
 import Player from './Player/Player';
 import './Listen.css'; // подключаем стили
+import generateSlug from '../../utils/generateSlug';
 
 const topRadio = [
   {
@@ -277,15 +278,6 @@ const topRadio = [
     "has_extended_info": false
   }
 ];
-
-function generateSlug(text) {
-  return text
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
-}
 
 const Listen = ({pathname}) => {
     const found = topRadio.find((station) => {

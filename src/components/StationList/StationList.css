@@ -1,0 +1,121 @@
+.station-list .station-list li {
+  background: #1b1b21;
+  margin: 10px 0;
+  border-radius: 15px;
+  color: #fff;
+  padding: 20px;
+  border: 1px solid #3f3f46;
+}
+.station-list .station-list li .station-name {
+  color: #dda9d4;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.station-list .station-list li div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.station-list .station-list li > div > p {
+  width: 200px;
+}
+.station-list .station-list .station-country, .station-list .station-list .station-tags, .station-list .station-list .station-language {
+  font-size: 0.9em !important;
+}
+.station-list .station-list .station-country {
+  margin: 15px 0 0 0;
+  display: block;
+  color: silver;
+}
+.station-list .station-list .station-language {
+  margin: 5px 0 0 0;
+  display: block;
+  color: silver;
+}
+.station-list .station-list li > div img {
+  border-radius: 8px;
+}
+.station-list .station-list .station-tags {
+  margin: 20px 0 0 0;
+  display: block;
+  color: silver;
+}
+.station-list .station-list button {
+  padding: 12px 20px;
+  width: auto;
+  border-radius: 8px;
+  background-color: #f43f5e;
+  border: 0;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 20px 0 0 0;
+  transition: 0.2s;
+  border: 1px solid #3f3f46;
+  color: #fff;
+}
+.station-list .station-list button:hover {
+  background-color: #4a4a52;
+}
+.station-list .station-list {
+  margin: 15px 0 0 0;
+}
+.station-list .station-list .station-item span span {
+  font-weight: bold;
+}
+.station-list .station-list .station-item .tag {
+  font-size: 0.8em;
+  background: #f43f5e;
+  margin: 3px;
+  color: #fff;
+  display: inline-block;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+.station-list .station-list .station-item .tag:hover {
+  background: #4a4a52;
+}
+.station-list .station-list .station-item .tag a {
+  padding: 3px 5px;
+  display: block;
+}
+
+@media (min-width: 600px) {
+    .station-list .station-list li {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .station-list .station-list {
+      flex-wrap: wrap;
+      display: flex;
+      justify-content: space-between;
+    }
+    .station-list .station-list .station-item p {
+      margin: 0 0 0 20px;
+    }
+}
+
+@media (min-width: 1000px) {
+  .station-list .station-list li {
+    width: 320px;
+  }
+}
+
+@media (min-width: 1250px) {
+  .station-list .station-list li {
+    width: 400px;
+  }
+}
+
+@media (min-width: 1900px) {
+  .station-list .station-list li {
+    width: 350px;
+  }
+}
+
+@media (max-width: 400px) {
+    .station-list .station-list .station-item p {
+      margin: 0 0 0 15px;
+    }
+}
