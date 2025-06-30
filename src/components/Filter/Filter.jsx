@@ -59,7 +59,7 @@ const Filter = ({ countries, languages, tags }) => {
     console.log(languageVal);
     console.log(tagsVal);
     console.log(selectedCountry);
-    console.log(strictMatchesOnly)
+    console.log(strictMatchesOnly);
   }
 
   const handleCheckboxChange = (e) => {
@@ -68,7 +68,7 @@ const Filter = ({ countries, languages, tags }) => {
 
     return (
         <div className='filter'>
-            <input type="text" placeholder='Search for a station' onChange={(e) => {setNameVal(e.target.value) || setLanguageVal('') || setTagsVal('')}} value={nameVal} />
+            <input type="text" placeholder='Search for a station' onChange={(e) => {setNameVal(e.target.value)}} value={nameVal} />
             <div className="select-opt">
                 <div className={styles.dropdown} ref={dropdownRef}>
                 <div className={styles.selectBox} onClick={toggleDropdown}>
