@@ -30,7 +30,7 @@ function generateSlug(text) {
     .replace(/(^-|-$)/g, '');
 }
  */
-const page = ({ params }) => {
+const page = async ({ params }) => {
 
   /* const found = topRadio.find((station) => {
     const fullSlug = `${generateSlug(station.country)}-${generateSlug(station.name)}`;
@@ -47,7 +47,7 @@ const page = ({ params }) => {
   } */
 
   return (
-    <div style={{ padding: 20 }}>
+    <div>
       {/* <h1>{found.name}</h1>
       <p><strong>Country:</strong> {found.country}</p>
       <p><strong>Stream URL:</strong> <a href={found.url_resolved} target="_blank">{found.url_resolved}</a></p>

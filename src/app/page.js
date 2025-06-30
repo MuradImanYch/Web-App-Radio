@@ -1,4 +1,5 @@
 import Main from "../components/Main/Main";
+import topRadio from '../../public/docs/mock-api/topclick.json';
 
 const fetchTopRadio = async () => {
     try {
@@ -12,10 +13,10 @@ const fetchTopRadio = async () => {
   };
 
 const page = async () => {
-  const topRadio = await fetchTopRadio();
+  // const topRadio = await fetchTopRadio();
   return (
     <div>
-      <Main topRadio={topRadio} />
+      <Main stations={topRadio} />
     </div>
   );
 };

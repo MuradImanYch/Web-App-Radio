@@ -38,21 +38,57 @@
     font-size: 1em;
     transition: 0.2s;
     color: #fff;
+    margin: 0 0 10px 0;
 }
 .filter button:hover {
     background-color: #4a4a52;
+}
+.filter .strict-cb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 25px 0;
+}
+.filter .strict-cb input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    cursor: pointer;
+    margin: 0 0 0 10px;
+}
+.filter .strict-cb label {
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.9em;
 }
 
 
 @media (min-width: 600px) {
     .filter select {
-        width: 180px;
         margin: 0 10px 0 0;
     }
     .filter button {
         width: auto;
+        margin: 0 10px 0 0;
     }
     .filter .select-opt {
         display: flex;
+    }
+    .filter .strict-cb {
+        width: auto !important;
+        margin: 0 10px 0 0;
+        text-align: center;
+    }
+}
+
+@media (min-width: 1024) {
+    .filter select {
+        width: 180px;
+    }
+    .filter .select-opt > div, .filter .select-opt > select {
+        width: 300px;
+    }
+    .filter .strict-cb {
+        margin: 0 20px 0 10px;
     }
 }

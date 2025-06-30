@@ -1,6 +1,9 @@
 import Link from "next/link";
 import "./globals.css";
 import Filter from "@/components/Filter/Filter";
+import countries from '../../public/docs/mock-api/countries.json';
+import languages from '../../public/docs/mock-api/languages.json';
+import tags from '../../public/docs/mock-api/tags.json';
 
   const fetchCountries = async () => {
     try {
@@ -36,15 +39,15 @@ import Filter from "@/components/Filter/Filter";
   };
 
 export default async function RootLayout({ children }) {
-  const countries = await fetchCountries();
-  const language = await fetchLanguage();
-  const tags = await fetchTags();
+  // const countries = await fetchCountries();
+  // const language = await fetchLanguage();
+  // const tags = await fetchTags();
   
   return (
     <html lang="en">
       <body>
         <div className="logoWrap"><Link href={'/'} className="logo">LOGO Web RADIO</Link></div>
-        <Filter countries={countries} language={language} tags={tags} />
+        <Filter countries={countries} languages={languages} tags={tags} />
         {children}
       </body>
     </html>
