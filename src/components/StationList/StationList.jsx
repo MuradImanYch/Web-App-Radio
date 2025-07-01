@@ -19,7 +19,7 @@ const StationList = ({stations}) => {
                           </p>
                       </div>
                       {station.tags ? <span className="station-tags"><span>Tags:</span> {station.tags.split(',').map((tag, i) => {
-                        return <div key={tag + '-' + i} className="tag"><Link href="#">{tag}</Link></div>
+                        return <div key={tag + '-' + i} className="tag"><Link href={`/search?strict=false&tag=${tag}`}>{tag}</Link></div>
                       })}</span> : <div style={{margin: '20px 0 0 0'}}>No tags available</div>}
                       <div className='playBtn'><Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name)}><button>▶ Play</button></Link></div>
                       {/* <audio controls>

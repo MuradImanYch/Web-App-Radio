@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import './Main.css';
 import StationList from '../StationList/StationList';
 

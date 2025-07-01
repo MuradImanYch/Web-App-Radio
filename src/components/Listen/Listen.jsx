@@ -3,11 +3,11 @@ import Player from './Player/Player';
 import './Listen.css';
 import generateSlug from '../../utils/generateSlug';
 import StationList from '../StationList/StationList';
-import topRadio from '../../../public/docs/mock-api/topclick.json';
+import stations from '../../../public/docs/mock-api/stations.json';
 import Link from 'next/link';
 
 const Listen = ({pathname}) => {
-    const found = topRadio.find((station) => {
+    const found = stations.find((station) => {
     const fullSlug = `${generateSlug(station.country)}-${generateSlug(station.name)}`;
         return fullSlug === pathname;
     });
@@ -31,12 +31,12 @@ const Listen = ({pathname}) => {
             </span>
             <div className="tags">
               {found.tags ? found.tags.split(',').map((tag, i) => (
-                <div key={tag + '-' + i} className="tag"><Link href={'#'}>{tag}</Link></div>
+                <div key={tag + '-' + i} className="tag"><Link href={`/search?strict=false&tag=${tag}`}>{tag}</Link></div>
               )) : <div className='notag'>No tags available</div>}
             </div>
             <Player url={found.url_resolved} />
             <h2>Similar radio stations</h2>
-            <StationList stations={topRadio} />
+            <StationList stations={stations} />
         </div>
     );
 };
