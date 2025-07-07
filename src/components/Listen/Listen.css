@@ -1,0 +1,34 @@
+.listen-container .tag {
+  font-size: 0.8em;
+  background: #f43f5e;
+  margin: 3px;
+  color: #fff;
+  display: inline-block;
+  border-radius: 8px;
+  transition: 0.2s;
+  text-decoration: underline;
+}
+.listen-container .tag a {
+  padding: 3px 5px;
+  display: block;
+}
+.listen-container .tag:hover {
+  background: #4a4a52;
+}
+.listen-container .tags {
+    margin: 10px 0 0 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.listen-container .tags .notag {
+  margin: 10px 0 0 0;
+  color: #fff;
+}
+.listen-container h2 {
+  margin: 40px 0 25px 0;
+  text-align: center;
+}
+.listen-container .country-flag {
+  margin: 0 6px 0 0;
+}

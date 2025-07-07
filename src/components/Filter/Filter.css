@@ -1,0 +1,81 @@
+.filter {
+    background-color: #1b1b21;
+    border-radius: 15px;
+    padding: 24px;
+    margin-top: 32px;
+}
+.filter input {
+    background-color: #201e27;
+    padding: 12px 16px 10px 40px;
+    font-size: 1em;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    outline: none;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+.filter select {
+    background-color: #201e27;
+    padding: 12px 16px;
+    font-size: 1em;
+    border: 1px solid #3f3f46;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    margin: 0 0 10px 0;
+    height: 50px;
+}
+.filter select:last-child {
+    margin-bottom: 0;
+}
+.filter button {
+    padding: 12px 16px;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #f43f5e;
+    border: 0;
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.2s;
+    color: #fff;
+    margin: 0 0 10px 0;
+    height: 50px;
+}
+.filter button:hover {
+    background-color: #4a4a52;
+}
+.filter .select-opt > div > div {
+    height: 50px;
+    font-size: 0.9em;
+}
+.filter .Countries-module__vD6aXW__options {
+    min-height: 400px;
+}
+
+
+@media (min-width: 600px) {
+    .filter select {
+        margin: 0 10px 0 0;
+        max-width: 270px;
+    }
+    .filter .Countries-module__vD6aXW__selectBox {
+        max-width: 300px;
+    }
+    .filter button {
+        width: auto;
+        margin: 0 10px 0 0;
+    }
+    .filter .select-opt {
+        display: flex;
+    }
+}
+
+@media (min-width: 1024) {
+    .filter select {
+        width: 180px;
+    }
+    .filter .select-opt > div, .filter .select-opt > select {
+        width: 300px;
+    }
+}
