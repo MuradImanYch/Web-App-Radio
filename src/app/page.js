@@ -1,5 +1,5 @@
 import Main from "../components/Main/Main";
-import fallbackStations from "../../public/docs/mock-api/topclick.json"; // путь может отличаться в зависимости от структуры проекта
+import fallbackStations from "../../public/assets/docs/mock-api/topclick.json"; // путь может отличаться в зависимости от структуры проекта
 
 const fetchTopRadio = async () => {
   try {

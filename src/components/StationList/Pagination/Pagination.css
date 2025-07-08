@@ -9,7 +9,7 @@
 .pagination button {
   padding: 6px 10px;
   border: 1px solid #ccc;
-  background: #fff;
+  background: transparent;
   cursor: pointer;
   border-radius: 4px;
   transition: background 0.2s;
@@ -17,12 +17,15 @@
 
 .pagination .active {
   background-color: #daa520;
-  color: white;
+  color: #fff;
   font-weight: bold;
 }
 
 .pagination .arrow {
   font-weight: bold;
+}
+.pagination .arrow:hover {
+  background: #daa520;
 }
 
 .pagination .dots {

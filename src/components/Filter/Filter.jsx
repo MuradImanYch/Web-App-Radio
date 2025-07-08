@@ -6,9 +6,9 @@ import Link from 'next/link';
 import styles from './Countries.module.css';
 import './Filter.css';
 import { useSearchParams } from 'next/navigation';
-import fallbackTags from "../../../public/docs/mock-api/tags.json";
-import fallbackLanguages from "../../../public/docs/mock-api/languages.json";
-import fallbackCountries from "../../../public/docs/mock-api/countries.json";
+import fallbackTags from "../../../public/assets/docs/mock-api/tags.json";
+import fallbackLanguages from "../../../public/assets/docs/mock-api/languages.json";
+import fallbackCountries from "../../../public/assets/docs/mock-api/countries.json";
 
 export default function Filter() {
   const searchParams = useSearchParams();

@@ -36,3 +36,26 @@
   align-items: center;
   justify-content: center;
 }
+
+
+@media (max-width: 430px) {
+    .star-wrapper canvas {
+      width: 20px;
+    }
+    .star-count {
+      width: 14px;
+      height: 14px;
+      right: 12px;
+      top: -8px;
+      font-size: 0.6em !important;
+    }
+    .fav-link__inner {
+      font-size: 0.9em;
+    }
+    .fav-link {
+      padding: 10px 10px 5px 5px;
+    }
+    .star-wrapper {
+      margin-right: 0;
+    }
+}

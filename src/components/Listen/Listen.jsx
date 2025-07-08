@@ -1,7 +1,7 @@
 import Player from './Player/Player';
 import './Listen.css';
 import StationList from '../StationList/StationList';
-import fallbackStations from '../../../public/docs/mock-api/stations.json';
+import fallbackStations from '../../../public/assets/docs/mock-api/stations.json';
 import Link from 'next/link';
 import Image from 'next/image';
 import StarCanvas from '../StarCanvas/StarCanvas';

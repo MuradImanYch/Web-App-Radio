@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './StationList.css';
 import generateSlug from '../../utils/generateSlug';
-import discLogo from '../../../public/disc-logo.png';
+import discLogo from '../../../public/assets/ico/disc-logo.png';
 import StarCanvas from '../StarCanvas/StarCanvas';
 import Pagination from './Pagination/Pagination';
 
