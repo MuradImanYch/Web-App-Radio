@@ -6,7 +6,7 @@ const Main = ({stations}) => {
         <div className="main-container">
             <h2>Popular radio stations</h2>
 
-            <StationList stations={stations} />
+            <StationList page={'main'} stations={stations} />
         </div>
     );
 };

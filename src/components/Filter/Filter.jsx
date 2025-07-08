@@ -183,7 +183,8 @@ export default function Filter() {
                     ? `https://flagsapi.com/${selectedCountry?.iso_3166_1}/flat/64.png`
                     : allCountriesOption.flag
                 }
-                alt={selectedCountry?.name}
+                alt={selectedCountry?.name ? selectedCountry?.name : 'Undefined country'}
+                title={selectedCountry?.name ? selectedCountry?.name : 'Undefined country'}
                 width={20}
                 height={20}
               />
@@ -213,7 +214,8 @@ export default function Filter() {
                         ? `https://flagsapi.com/${c?.iso_3166_1}/flat/64.png`
                         : allCountriesOption.flag
                     }
-                    alt={c?.name}
+                    alt={c?.name ? c?.name : 'Undefined country'}
+                    title={c?.name ? c?.name : 'Undefined country'}
                     width={20}
                     height={20}
                   />
@@ -245,7 +247,7 @@ export default function Filter() {
           ))}
         </select>
 
-        <Link href={nameVal || languageVal || tagsVal || selectedCountry?.code !== 'ALL' ? searchUrl : '#'} className="search-btn">
+        <Link href={nameVal.length || languageVal.length || tagsVal.length || selectedCountry?.code !== 'ALL' ? searchUrl : '#'} className="search-btn">
           <button type="button">Search</button>
         </Link>
 

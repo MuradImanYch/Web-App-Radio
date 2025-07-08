@@ -26,14 +26,19 @@
   opacity: 0.4;
   filter: blur(2px);
 }
+.player-wrapper .rotating {
+  animation: spin 5s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
 
 .circle.playing {
   box-shadow: 0 0 30px #f43f5e;
 }
 
 .play-button {
-  font-size: 36px;
-  color: white;
   z-index: 2;
 }
 
@@ -108,8 +113,4 @@
   border-radius: 50%;
   background: limegreen;
   border: none;
-}
-.player-wrapper .pause {
-    margin: 0 5px 5px 0;
-    font-size: 1.2em;
 }

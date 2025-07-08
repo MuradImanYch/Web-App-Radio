@@ -1,0 +1,38 @@
+.fav-link {
+  display: flex;
+  align-items: center;
+  background: #1b1b21;
+  padding: 10px 15px 5px 10px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+.fav-link:hover {
+    background: #2c2c36;
+}
+.fav-link__inner {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+}
+
+.star-wrapper {
+  position: relative;
+  width: fit-content;
+  margin-right: 6px; /* чтобы отступить от текста */
+}
+
+.star-count {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  background: red;
+  color: #fff;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 0.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

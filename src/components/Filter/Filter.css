@@ -13,6 +13,7 @@
     outline: none;
     width: 100%;
     margin: 0 0 10px 0;
+    color: #fff;
 }
 .filter select {
     background-color: #201e27;
@@ -25,6 +26,7 @@
     width: 100%;
     margin: 0 0 10px 0;
     height: 50px;
+    color: #fff;
 }
 .filter select:last-child {
     margin-bottom: 0;
@@ -51,6 +53,9 @@
 }
 .filter .Countries-module__vD6aXW__options {
     min-height: 400px;
+}
+.filter .Countries-module__vD6aXW__selectBox {
+    color: #fff !important;
 }
 
 

@@ -1,5 +1,5 @@
 import Search from "@/components/Search/Search";
-import fallbackStations from "../../../public/docs/mock-api/stations.json";
+import fallbackStations from "../../../../../public/docs/mock-api/stations.json";
 
 const API_SERVER = 'https://de1.api.radio-browser.info';
 

@@ -2,12 +2,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import './StationList.css';
 import generateSlug from '../../utils/generateSlug';
+import discLogo from '../../../public/disc-logo.png';
+import StarCanvas from '../StarCanvas/StarCanvas';
+import Pagination from './Pagination/Pagination';
 
-const StationList = ({stations}) => {
+const StationList = ({stations, page, name, country, language, tag, pageNum}) => {
+    const itemsPerPage = 20;
+    const start = (pageNum - 1) * itemsPerPage; // (pageNum - 1) * 20 = 40
+    const end = pageNum * itemsPerPage;
+
+    const visibleStations =
+  page === 'favorites'
+    ? stations.slice(0)
+    : page === 'listen' ? stations.slice(0, 30) : page === 'main' ? stations.slice(0, 30) : stations.slice(start, end);
+
     return (
-        <div className="station-list">
-            <ul className="station-list">
-                {stations.slice(0, 30).map((station) => {
+        <div className="station-list" style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}>
+            <ul className="station-list" style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}>
+                {visibleStations.map((station) => {
                     const isValidUrl = (url) => {
                         try {
                             // Проверяем, является ли абсолютным URL (http или https)
@@ -24,8 +36,8 @@ const StationList = ({stations}) => {
                             width={90}
                             height={90}
                             src={station.favicon.trim()}
-                            title={station?.name || 'No name'}
-                            alt={station?.name || 'Unknown station'}
+                            title={station?.name ? station?.name : 'Unknown station'}
+                            alt={station?.name ? station?.name : 'Unknown station'}
                             placeholder={'empty'}
                             quality={100}
                         />
@@ -33,9 +45,9 @@ const StationList = ({stations}) => {
                         <Image
                             width={90}
                             height={90}
-                            src="https://pnghunter.com/get-logo.php?id=15348" // Убедись, что такой файл есть в public/
-                            title="No image"
-                            alt="Fallback image"
+                            src={discLogo}
+                            title={station?.name ? station?.name : 'Unknown station'}
+                            alt={station?.name ? station?.name : 'Unknown station'}
                             placeholder={'empty'}
                             quality={100}
                         />
@@ -46,7 +58,7 @@ const StationList = ({stations}) => {
                             <p className="station-meta">
                                 <span className="station-country">
                                 <strong>Country:</strong> <Image className='country-flag-card' src={`https://flagsapi.com/${station.countrycode}/flat/64.png`} width={22}
-                                height={22} alt={station.country || 'Unknown country'} title={station.country || 'Unknown country'} placeholder={'empty'} quality={100} /> {station.country || 'Unknown country'}
+                                height={22} alt={station.country ? station.country : 'Unknown country'} title={station.country ? station.country :  'Unknown country'} placeholder={'empty'} quality={100} /> {station.country || 'Unknown country'}
                                 </span>
                                 <br />
                                 <span className="station-language">
@@ -58,10 +70,12 @@ const StationList = ({stations}) => {
                       {station.tags ? <div className="station-tags"><span>Tags:</span> {station.tags.split(',').map((tag, i) => {
                         return <div key={tag + '-' + i} className="tag"><Link href={`/search?tag=${tag}`}>{tag}</Link></div>
                       })}</div> : <div style={{margin: '20px 0 0 0'}}>No tags available</div>} {station.tags.split(',').length > 6 && <span title='more tags'>...</span>}
-                      <div className='playBtn'><Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name) + '-uuid-' + station.stationuuid}><button>▶ Play</button></Link></div>
+                      <div className='playBtn'><Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name) + '-uuid-' + station.stationuuid}><button>▶ Play</button></Link> <StarCanvas stationuuid={station.stationuuid} size={40} color="transparent" strokeColor="#FFA500" strokeWidth={2} /></div>
                   </li>
                 })}
             </ul>
+
+            {page === 'search' && <Pagination stations={stations} page={page} name={name} country={country} language={language} tag={tag} pageNum={pageNum} />}
         </div>
     );
 };

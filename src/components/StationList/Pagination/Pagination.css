@@ -1,0 +1,32 @@
+.pagination {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 40px 0 20px 0;
+}
+
+.pagination button {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.pagination .active {
+  background-color: #daa520;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination .arrow {
+  font-weight: bold;
+}
+
+.pagination .dots {
+  display: inline-block;
+  padding: 6px 10px;
+  color: #666;
+}

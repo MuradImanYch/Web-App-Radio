@@ -52,8 +52,12 @@ h1 {
 }
 .logoWrap {
   text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-.logoWrap a {
-  text-align: center;
-  font-size: 2em;
+.logoWrap a:first-child, .logoWrap div:last-child {
+  width: 100px;
+  color: #fff;
+  text-decoration: underline;
 }
