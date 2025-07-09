@@ -1,3 +1,44 @@
-.langSwitch a {
-    margin: 0 3px;
+.lang-switch-container {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  padding: 5px;
+}
+
+.arrow {
+  font-size: 0.8em;
+  margin-left: 4px;
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 0;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lang-dropdown li {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  cursor: pointer;
+  gap: 10px;
+  transition: background 0.2s;
+}
+
+.lang-dropdown li:hover {
+  background-color: #f0f0f0;
 }
