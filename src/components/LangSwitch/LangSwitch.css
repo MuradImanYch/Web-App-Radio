@@ -10,24 +10,27 @@
   border: none;
   cursor: pointer;
   gap: 5px;
-  padding: 5px;
+  padding: 8px;
+  background: #1b1b21;
+  border-radius: 5px 5px 0 0;
 }
 
 .arrow {
   font-size: 0.8em;
   margin-left: 4px;
+  color: #fff;
 }
 
 .lang-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background: #1b1b21;
+  border-radius: 0 0 5px 5px;
   padding: 5px 0;
   z-index: 10;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 150px;
 }
 
 .lang-dropdown li {
@@ -38,7 +41,18 @@
   gap: 10px;
   transition: background 0.2s;
 }
+.lang-dropdown li a {
+  display: flex;
+  font-size: 0.8em;
+  align-items: center;
+}
+.lang-dropdown li .lang-label {
+  margin: 0 0 0 10px;
+}
 
 .lang-dropdown li:hover {
-  background-color: #f0f0f0;
+  background-color: #fff;
+}
+.lang-dropdown li:hover .lang-label {
+  color: #1b1b21;
 }
