@@ -4,9 +4,12 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import StarCanvas from '../StarCanvas/StarCanvas';
 import './FavLink.css';
+import { usePathname } from 'next/navigation';
+import langJSON from '../../../public/assets/docs/languages.json';
 
 const FavLink = () => {
   const [count, setCount] = useState(0);
+  const pathname = usePathname();
 
   const updateCountFromLocalStorage = () => {
     try {
@@ -53,7 +56,7 @@ const FavLink = () => {
             {count}
           </span>
         </div>
-        Favorites
+        {langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.favoritesBtn}
       </Link>
     </div>
 

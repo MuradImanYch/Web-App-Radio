@@ -13,9 +13,11 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body>
         <header className="logoWrap">
-          <FavLink />
-          <Link href={'/'} className="logo"><Image src={logo} alt="Legendary radio" title="Legendary radio" width={130} height={75} placeholder={'empty'} /></Link>
-          <LangSwitch />
+          <nav>
+            <LangSwitch />
+            <Link href={'/'} className="logo"><Image src={logo} alt="Legendary radio" title="Legendary radio" width={130} height={75} placeholder={'empty'} /></Link>
+            <FavLink />
+          </nav>
         </header>
 
         <Suspense fallback={<div>Loading...</div>}>

@@ -77,6 +77,7 @@ export default async function Page({ searchParams, params }) {
       results={searchResults}
       pageNum={params.page || '1'}
       page={'search'}
+      lang={params.lang || 'en'}
     />
   );
 }

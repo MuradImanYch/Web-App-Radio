@@ -5,6 +5,7 @@ import fallbackStations from '../../../public/assets/docs/mock-api/stations.json
 import Link from 'next/link';
 import Image from 'next/image';
 import StarCanvas from '../StarCanvas/StarCanvas';
+import langJSON from '../../../public/assets/docs/languages.json';
 
 const API = 'https://de1.api.radio-browser.info';
 
@@ -67,7 +68,7 @@ const fallbackSimilar = (tags, currentUUID) => {
     .sort((a, b) => b.matchCount - a.matchCount);
 };
 
-const Listen = async ({ pathname }) => {
+const Listen = async ({ pathname, lang }) => {
   const uuid = pathname.split('uuid-')[1];
   const foundArr = await fetchStationByUUID(uuid);
   const found = foundArr[0];
@@ -75,8 +76,8 @@ const Listen = async ({ pathname }) => {
   if (!found) {
     return (
       <div>
-        <h1 style={{ marginTop: '40px' }}>Station is not found</h1>
-        <p>Find by: <code>{pathname}</code></p>
+        <h1 style={{ marginTop: '40px' }}>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.stationNFTxt}</h1>
+        <p style={{color: '#fff', marginTop: '40px'}}>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.searchedByTxt}: <code>{pathname}</code></p>
       </div>
     );
   }
@@ -126,14 +127,14 @@ const Listen = async ({ pathname }) => {
             <Link href={`/search?tag=${encodeURIComponent(tag)}`}>{tag}</Link>
           </div>
         )) : (
-          <div className='notag'>No tags available</div>
+          <div className='notag'>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.noTagsTxt}</div>
         )}
       </div>
 
       <Player url={found.url_resolved} favicon={found.favicon} />
 
-      <h2>Similar radio stations</h2>
-      <StationList page={'listen'} stations={similar} />
+      <h2>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.similarRadioST}</h2>
+      <StationList page={'listen'} stations={similar} lang={lang} />
     </div>
   );
 };

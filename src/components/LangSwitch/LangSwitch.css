@@ -14,6 +14,10 @@
   background: #1b1b21;
   border-radius: 5px 5px 0 0;
 }
+.lang-button:hover {
+  transition: 0.2s;
+  background: #2c2c36;
+}
 
 .arrow {
   font-size: 0.8em;

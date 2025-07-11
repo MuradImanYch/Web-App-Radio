@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import StationList from '@/components/StationList/StationList';
+import langJSON from '../../../public/assets/docs/languages.json';
 
 const API = 'https://de1.api.radio-browser.info';
 
@@ -38,7 +39,7 @@ const FavoritesPage = () => {
     loadFavorites();
   }, []);
 
-  if (favoriteStations.length === 0) return <div>No favorite stations found.</div>;
+  if (favoriteStations.length === 0) return <div>{langJSON.translations.en.favoriteStNotFound}</div>;
 
   return <StationList page={'favorites'} stations={favoriteStations} />;
 };

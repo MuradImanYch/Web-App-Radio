@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import StationList from '@/components/StationList/StationList';
+import langJSON from '../../../../public/assets/docs/languages.json';
+import { usePathname } from 'next/navigation';
 
 const API = 'https://de1.api.radio-browser.info';
 
-const FavoritesPage = () => {
+const FavoritesPage = ({params}) => {
   const [favoriteStations, setFavoriteStations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchStationByUUID = async (uuid) => {
@@ -38,9 +41,9 @@ const FavoritesPage = () => {
     loadFavorites();
   }, []);
 
-  if (favoriteStations.length === 0) return <div>No favorite stations found.</div>;
+  if (favoriteStations.length === 0) return <div>{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.favoriteStNotFound}</div>;
 
-  return <StationList page={'favorites'} stations={favoriteStations} />;
+  return <StationList page={'favorites'} stations={favoriteStations} lang={params.lang} />;
 };
 
 export default FavoritesPage;

@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react';
+import langJSON from '../../../public/assets/docs/languages.json';
+import { usePathname } from 'next/navigation';
 
 const StarCanvas = ({
   size = 24,
@@ -14,6 +16,7 @@ const StarCanvas = ({
   const canvasRef = useRef(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const currentColor = useRef(color);
+  const pathname = usePathname();
 
   // Функция рисования звезды
   const drawStar = (ctx, cx, cy, spikes, outerRadius, innerRadius, fillColor) => {
@@ -132,7 +135,7 @@ const StarCanvas = ({
     <canvas
     className='star-canvas'
   onClick={addUuid}
-  title={place === 'header-fav-ico' ? 'Favorites' : 'Set as favorite'}
+  title={place === 'header-fav-ico' ? langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.favoritesBtn : langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.setAsFavorite}
   ref={canvasRef}
   width={place === 'header-fav-ico' ? size * 1.3 : size}
   height={place === 'header-fav-ico' ? size * 1.3 : size}

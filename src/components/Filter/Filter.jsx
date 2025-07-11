@@ -5,10 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Countries.module.css';
 import './Filter.css';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import fallbackTags from "../../../public/assets/docs/mock-api/tags.json";
 import fallbackLanguages from "../../../public/assets/docs/mock-api/languages.json";
 import fallbackCountries from "../../../public/assets/docs/mock-api/countries.json";
+import langJSON from '../../../public/assets/docs/languages.json';
 
 export default function Filter() {
   const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ export default function Filter() {
   const [tags, setTags] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [countries, setCountries] = useState([]);
+  const pathname = usePathname();
 
   useEffect(() => {
     async function fetchTags() {
@@ -92,7 +94,7 @@ export default function Filter() {
   }, []);
 
   const allCountriesOption = {
-    name: 'All countries',
+    name: langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.allCountries,
     iso_3166_1: 'ALL',
     flag: 'https://pnghunter.com/get-logo.php?id=15348',
   };
@@ -165,7 +167,7 @@ export default function Filter() {
     <div className="filter">
       <input
         type="text"
-        placeholder="Search for a station"
+        placeholder={langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.filterInputPH}
         value={nameVal}
         onChange={(e) => {
           setNameVal(e.target.value);
@@ -230,7 +232,7 @@ export default function Filter() {
         </div>
 
         <select value={languageVal} onChange={(e) => setLanguageVal(e.target.value)}>
-          <option value="">All languages</option>
+          <option value="">{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.allLanguages}</option>
           {languages.map((l, i) => (
             <option key={l.iso_639 + i} value={l.iso_639}>
               {l?.name}
@@ -239,7 +241,7 @@ export default function Filter() {
         </select>
 
         <select value={tagsVal} onChange={(e) => setTagsVal(e.target.value)}>
-          <option value="">All tags</option>
+          <option value="">{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.allTags}</option>
           {tags.map((t, i) => (
             <option key={t?.name + i} value={t?.name}>
               {t?.name}
@@ -248,10 +250,10 @@ export default function Filter() {
         </select>
 
         <Link href={nameVal.length || languageVal.length || tagsVal.length || selectedCountry?.code !== 'ALL' ? searchUrl : '#'} className="search-btn">
-          <button type="button">Search</button>
+          <button type="button">{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.searchBtn}</button>
         </Link>
 
-        <button type="button" onClick={reset}>Reset</button>
+        <button type="button" onClick={reset}>{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.resetBtn}</button>
       </div>
     </div>
   );
