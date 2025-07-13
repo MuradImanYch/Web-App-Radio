@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import azFlag from '../../../public/assets/ico/az.png';
@@ -18,23 +18,30 @@ const languages = [
 const LangSwitch = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const dropdownRef = useRef(null);
 
-  // Определение текущего языка из URL
+  // Текущий язык
   const currentLang = (() => {
     const parts = pathname.split('/');
-    const langCandidate = parts[1];
-    return ['ru', 'az'].includes(langCandidate) ? langCandidate : 'en';
+    const firstSegment = parts[1];
+    return ['ru', 'az'].includes(firstSegment) ? firstSegment : 'en';
   })();
 
-  // Удаление языкового префикса для формирования базового пути
+  // Путь без языкового префикса
   const currentPath = (() => {
     const parts = pathname.split('/');
     if (['ru', 'az'].includes(parts[1])) {
-      return '/' + parts.slice(2).join('/');
+      const rest = parts.slice(2).join('/');
+      return '/' + rest;
     }
     return pathname;
   })();
+
+  // Текущие query параметры в строку
+  const queryString = searchParams.toString();
+  // Добавим ? если есть параметры
+  const query = queryString ? `?${queryString}` : '';
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -53,8 +60,15 @@ const LangSwitch = () => {
 
   return (
     <div className="lang-switch-container" ref={dropdownRef}>
-      <button className="lang-button" onClick={toggleDropdown}>
-        <Image src={activeLang.flag} alt={activeLang.label} title={activeLang.label} width={27} height={20} placeholder="empty" />
+      <button className="lang-button" onClick={toggleDropdown} type="button">
+        <Image
+          src={activeLang.flag}
+          alt={activeLang.label}
+          title={activeLang.label}
+          width={27}
+          height={20}
+          placeholder="empty"
+        />
         <span className="arrow">{isOpen ? '▲' : '▼'}</span>
       </button>
 
@@ -63,12 +77,22 @@ const LangSwitch = () => {
           {languages
             .filter((l) => l.code !== currentLang)
             .map((lang) => {
-              const href = lang.code === 'en' ? currentPath : `/${lang.code}${currentPath}`;
+              // Формируем href с языковым префиксом + query
+              const baseHref = lang.code === 'en' ? currentPath : `/${lang.code}${currentPath}`;
+              const href = `${baseHref}${query}`;
+
               return (
                 <li key={lang.code} onClick={() => setIsOpen(false)}>
                   <Link href={href}>
-                    <Image src={lang.flag} alt={lang.label} title={lang.label} width={27} height={20} placeholder="empty" />
-                    <span className="lang-label">{lang.label}</span>
+                      <Image
+                        src={lang.flag}
+                        alt={lang.label}
+                        title={lang.label}
+                        width={27}
+                        height={20}
+                        placeholder="empty"
+                      />
+                      <span className="lang-label">{lang.label}</span>
                   </Link>
                 </li>
               );

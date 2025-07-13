@@ -1,84 +1,183 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import './StationList.css';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: '700',
+});
+
 import generateSlug from '../../utils/generateSlug';
-import discLogo from '../../../public/assets/ico/disc-logo.png';
-import StarCanvas from '../StarCanvas/StarCanvas';
-import Pagination from './Pagination/Pagination';
-import langJSON from '../../../public/assets/docs/languages.json';
+import discLogo     from '../../../public/assets/ico/disc-logo.png';
 
-const StationList = ({stations, page, name, country, language, tag, pageNum, lang}) => {
-    const itemsPerPage = 20;
-    const start = (pageNum - 1) * itemsPerPage; // (pageNum - 1) * 20 = 40
-    const end = pageNum * itemsPerPage;
+import StarCanvas  from '../StarCanvas/StarCanvas';
+import Pagination  from './Pagination/Pagination';
+import langJSON    from '../../../public/assets/docs/languages.json';
 
-    const visibleStations =
-  page === 'favorites'
-    ? stations.slice(0)
-    : page === 'listen' ? stations.slice(0, 30) : page === 'main' ? stations.slice(0, 30) : stations.slice(start, end);
+const StationList = ({
+  stations = [],
+  page     = 'main',
+  name,
+  country,
+  language,
+  tag,
+  pageNum  = 1,
+  lang     // текущий сегмент языка, приходит из родительского компонента
+}) => {
+  /* ---------- helpers ---------- */
 
-    return (
-        <div className="station-list" style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}>
-            <ul className="station-list" style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}>
-                {visibleStations.map((station) => {
-                    const isValidUrl = (url) => {
-                        try {
-                            // Проверяем, является ли абсолютным URL (http или https)
-                            return typeof url === 'string' && (url.startsWith('http://') || url.startsWith('https://'));
-                        } catch (e) {
-                            return false;
-                        }
-                    };
+  // валидный ли код языка
+  const isLangValid = langJSON.available.includes(lang);
+  // корневая часть пути: '' | '/az' | '/ru'
+  const basePath    = isLangValid ? `/${lang}` : '';
+  // объект перевода (en по‑умолчанию)
+  const t = langJSON.translations[isLangValid ? lang : 'en'];
 
-                  return <li className="station-item" key={station.stationuuid}>
-                      <div className="top">
-                        {isValidUrl(station?.favicon) ? (
-                        <Image
-                            width={90}
-                            height={90}
-                            src={station.favicon.trim()}
-                            title={station?.name ? station?.name : langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownStationTxt}
-                            alt={station?.name ? station?.name : langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownStationTxt}
-                            placeholder={'empty'}
-                            quality={100}
-                        />
-                        ) : (
-                        <Image
-                            width={90}
-                            height={90}
-                            src={discLogo}
-                            title={station?.name ? station?.name : langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownStationTxt}
-                            alt={station?.name ? station?.name : langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownStationTxt}
-                            placeholder={'empty'}
-                            quality={100}
-                        />
-                        )}
-                        <div className='station-info-wrap'>
-                            <h3 className={`station-name ${station?.name.length > 27 && 'marquee'}`}>{station?.name || langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownStationTxt}</h3>
-                            
-                            <p className="station-meta">
-                                <span className="station-country">
-                                <strong>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.countryTxt}:</strong> <Image className='country-flag-card' src={`https://flagsapi.com/${station.countrycode}/flat/64.png`} width={22}
-                                height={22} alt={station.country ? station.country : langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownCountryTxt} title={station.country ? station.country :  langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownCountryTxt} placeholder={'empty'} quality={100} /> {station.country || langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownCountryTxt}
-                                </span>
-                                <br />
-                                <span className="station-language">
-                                <strong>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.languageTxt}:</strong> {station.language || langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.unknownLangTxt}
-                                </span>
-                            </p>
-                        </div>
+  // быстрая проверка, абсолютный ли URL
+  const isValidUrl = (url = '') => /^(https?:)?\/\//i.test(url);
+
+  /* ---------- пагинация ---------- */
+
+  const PER_PAGE    = 20;
+  const start       = (pageNum - 1) * PER_PAGE;
+  const end         = pageNum * PER_PAGE;
+
+  const visibleStations =
+    page === 'favorites'
+      ? stations
+      : page === 'listen' || page === 'main'
+        ? stations.slice(0, 30)
+        : stations.slice(start, end);
+
+  /* ---------- render ---------- */
+
+  return (
+    <div
+      className="station-list"
+      style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}
+    >
+      <ul
+        className="station-list"
+        style={stations.length < 3 ? { justifyContent: 'flex-start' } : {}}
+      >
+        {visibleStations.map((st) => {
+          const {
+            stationuuid,
+            favicon,
+            name: stName,
+            country: stCountry,
+            countrycode = 'UN',     // fallback, если кода нет
+            language: stLang,
+            tags = ''
+          } = st;
+
+          const displayName  = stName     || t.unknownStationTxt;
+          const displayCtry  = stCountry  || t.unknownCountryTxt;
+          const displayLang  = stLang     || t.unknownLangTxt;
+          const tagArray     = tags ? tags.split(',') : [];
+          const tagLimit     = 6;
+
+          /* строим ссылки */
+          const listenHref   =
+            `${basePath}/listen/${generateSlug(stCountry)}-${generateSlug(stName)}-uuid-${stationuuid}`;
+
+          return (
+            <li className="station-item" key={stationuuid}>
+              {/* верхняя часть карточки */}
+              <div className="top">
+                <Image
+                  width={90}
+                  height={90}
+                  src={isValidUrl(favicon) ? favicon.trim() : discLogo}
+                  alt={displayName}
+                  title={displayName}
+                  placeholder="empty"
+                  quality={100}
+                />
+
+                <div className="station-info-wrap">
+                  {/* название */}
+                  <h3 className={`station-name ${displayName.length > 27 ? 'marquee' : ''} ${poppins.className}`}>
+                    {displayName}
+                  </h3>
+
+                  {/* метаданные */}
+                  <p className="station-meta">
+                    <span className="station-country">
+                      <strong>{t.countryTxt}:</strong>&nbsp;
+                      <Image
+                        className="country-flag-card"
+                        src={`https://flagsapi.com/${countrycode}/flat/64.png`}
+                        width={22}
+                        height={22}
+                        alt={displayCtry}
+                        title={displayCtry}
+                        placeholder="empty"
+                        quality={100}
+                      />
+                      &nbsp;{displayCtry}
+                    </span>
+                    <br />
+                    <span className="station-language">
+                      <strong>{t.languageTxt}:</strong>&nbsp;{displayLang}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              {/* теги */}
+              {tagArray.length
+                ? (
+                  <div className="station-tags">
+                    <span>{t.tagsTxt}:</span>
+                    {tagArray.slice(0, tagLimit).map((tg, i) => (
+                      <div key={`${tg}-${i}`} className="tag">
+                        <Link href={`${basePath}/search?tag=${tg.trim()}`}>{tg.trim()}</Link>
                       </div>
-                      {station.tags ? <div className="station-tags"><span>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.tagsTxt}:</span> {station.tags.split(',').map((tag, i) => {
-                        return <div key={tag + '-' + i} className="tag"><Link href={`/search?tag=${tag}`}>{tag}</Link></div>
-                      })}</div> : <div style={{margin: '20px 0 0 0'}}>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.noTagsTxt}</div>} {station.tags.split(',').length > 6 && <span title='more tags'>...</span>}
-                      <div className='playBtn'><Link href={'/listen/' + generateSlug(station.country) + '-' + generateSlug(station.name) + '-uuid-' + station.stationuuid}><button>▶ {langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.playBtn}</button></Link> <StarCanvas stationuuid={station.stationuuid} size={40} color="transparent" strokeColor="#FFA500" strokeWidth={2} /></div>
-                  </li>
-                })}
-            </ul>
+                    ))}
+                    {tagArray.length > tagLimit && <span title="more tags">…</span>}
+                  </div>
+                )
+                : <div style={{ marginTop: 20 }}>{t.noTagsTxt}</div>
+              }
 
-            {page === 'search' && <Pagination stations={stations} page={page} name={name} country={country} language={language} tag={tag} pageNum={pageNum} />}
-        </div>
-    );
+              {/* кнопка «Play» + избранное */}
+              <div className="playBtn">
+                <Link href={listenHref}>
+                  <button>
+                    ▶ {t.playBtn}
+                  </button>
+                </Link>
+
+                <StarCanvas
+                  stationuuid={stationuuid}
+                  size={40}
+                  color="transparent"
+                  strokeColor="#FFA500"
+                  strokeWidth={2}
+                />
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      {/* пагинация показывается только в поиске */}
+      {page === 'search' && (
+        <Pagination
+          stations={stations}
+          page={page}
+          name={name}
+          country={country}
+          language={language}
+          tag={tag}
+          pageNum={pageNum}
+          lang={lang}
+        />
+      )}
+    </div>
+  );
 };
 
 export default StationList;

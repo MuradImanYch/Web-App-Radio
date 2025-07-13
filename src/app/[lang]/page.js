@@ -1,6 +1,12 @@
 import Main from "@/components/Main/Main";
 import fallbackStations from "../../../public/assets/docs/mock-api/topclick.json";
 import langJSON from '../../../public/assets/docs/languages.json';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: '700',
+});
 
 const fetchTopRadio = async () => {
   try {
@@ -27,7 +33,7 @@ const Page = async ({params}) => {
 
   return (
     <div>
-      <h1 style={{ margin: '50px 0 0 0' }}>{langJSON.translations[params.lang]?.mainH1}</h1>
+      <h1 className={poppins.className} style={{ margin: '50px 0 0 0' }}>{langJSON.translations[params.lang]?.mainH1}</h1>
       <Main lang={params.lang} stations={topRadio} />
     </div>
   );

@@ -1,18 +1,20 @@
 import Link from 'next/link';
 import './Pagination.css';
 
-const Pagination = ({ stations, page, name, country, language, tag, pageNum }) => {
+const Pagination = ({ stations, page, name, country, language, tag, pageNum, lang }) => {
   const itemsPerPage = 20;
   const totalPages = Math.ceil(stations.length / itemsPerPage);
   const currentPage = parseInt(pageNum) || 1;
 
-  const queries = [name && 'name=' + name, country && 'country=' + country, language && 'language=' + language, tag && 'tag=' + tag]
+  const queries = [name && 'name=' + encodeURIComponent(name), country && 'country=' + encodeURIComponent(country), language && 'language=' + encodeURIComponent(language), tag && 'tag=' + encodeURIComponent(tag)]
     .filter(Boolean)
     .join('&')
     .replaceAll(' ', '+');
 
+  const langPrefix = lang && lang !== 'en' ? `/${lang}` : '';
+
   const makeHref = (p) => {
-    const base = page === 'search' ? `/search/page/${p}` : `/stations/${p}`;
+    const base = page === 'search' ? `${langPrefix}/search/page/${p}` : `${langPrefix}/stations/${p}`;
     return queries ? `${base}?${queries}` : base;
   };
 
@@ -25,7 +27,6 @@ const Pagination = ({ stations, page, name, country, language, tag, pageNum }) =
 
   if (totalPages <= 1) return null;
 
-  // Pages to show:
   const pages = [];
 
   // Arrow: ←
@@ -38,12 +39,10 @@ const Pagination = ({ stations, page, name, country, language, tag, pageNum }) =
   }
 
   if (totalPages <= 6) {
-    // Показываем все страницы, если их <= 6
     for (let i = 1; i <= totalPages; i++) {
       pages.push(PageLink(i));
     }
   } else {
-    // Показываем первые 3
     for (let i = 1; i <= 3; i++) {
       pages.push(PageLink(i));
     }
@@ -52,7 +51,6 @@ const Pagination = ({ stations, page, name, country, language, tag, pageNum }) =
       pages.push(<span key="dots-start" className="dots">...</span>);
     }
 
-    // Центральный текущий элемент (если не входит в первые/последние 3)
     if (currentPage > 3 && currentPage < totalPages - 2) {
       pages.push(PageLink(currentPage));
     }
@@ -61,7 +59,6 @@ const Pagination = ({ stations, page, name, country, language, tag, pageNum }) =
       pages.push(<span key="dots-end" className="dots">...</span>);
     }
 
-    // Показываем последние 3
     for (let i = totalPages - 2; i <= totalPages; i++) {
       if (i > 3) pages.push(PageLink(i));
     }
@@ -76,11 +73,7 @@ const Pagination = ({ stations, page, name, country, language, tag, pageNum }) =
     );
   }
 
-  return (
-    <div className="pagination">
-      {pages}
-    </div>
-  );
+  return <div className="pagination">{pages}</div>;
 };
 
 export default Pagination;

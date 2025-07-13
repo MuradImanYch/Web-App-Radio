@@ -1,65 +1,64 @@
-'use client'
+'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+
 import StarCanvas from '../StarCanvas/StarCanvas';
 import './FavLink.css';
-import { usePathname } from 'next/navigation';
+
 import langJSON from '../../../public/assets/docs/languages.json';
 
 const FavLink = () => {
+  /* ---------- локальное состояние ---------- */
   const [count, setCount] = useState(0);
-  const pathname = usePathname();
 
-  const updateCountFromLocalStorage = () => {
+  /* ---------- определяем язык из URL ---------- */
+  const pathname      = usePathname();               // напр. "/az/listen/..."
+  const firstSegment  = pathname.split('/')[1] || ''; // "az" | "" | ...
+  const isLangValid   = langJSON.available.includes(firstSegment);
+  const basePath      = isLangValid ? `/${firstSegment}` : ''; // "/az" | ""
+
+  /* ---------- перевод ---------- */
+  const t = langJSON.translations[isLangValid ? firstSegment : 'en'];
+
+  /* ---------- работа с localStorage ---------- */
+  const updateCount = () => {
     try {
       const raw = localStorage.getItem('favoriteUuids');
-      const arr = raw ? JSON.parse(raw) : [];
-      setCount(arr.length);
+      const list = raw ? JSON.parse(raw) : [];
+      setCount(list.length);
     } catch {
       setCount(0);
     }
   };
 
   useEffect(() => {
-    updateCountFromLocalStorage();
-
-    // Событие storage сработает только при изменениях в других вкладках
-    window.addEventListener('storage', updateCountFromLocalStorage);
-
+    updateCount();
+    window.addEventListener('storage', updateCount);          // изменения из других вкладок
+    window.addEventListener('favoriteUuidsChanged', updateCount); // кастомное событие для той же вкладки
     return () => {
-      window.removeEventListener('storage', updateCountFromLocalStorage);
+      window.removeEventListener('storage', updateCount);
+      window.removeEventListener('favoriteUuidsChanged', updateCount);
     };
   }, []);
 
-  // Можно добавить кастомный event для обновления count внутри одной вкладки,
-  // если в другом компоненте меняешь localStorage
-
-  useEffect(() => {
-    const onFavoriteUuidsChanged = () => {
-      updateCountFromLocalStorage();
-    };
-
-    window.addEventListener('favoriteUuidsChanged', onFavoriteUuidsChanged);
-
-    return () => {
-      window.removeEventListener('favoriteUuidsChanged', onFavoriteUuidsChanged);
-    };
-  }, []);
-
+  /* ---------- render ---------- */
   return (
     <div className="fav-link">
-      <Link href="/favorites" className="fav-link__inner">
+      <Link href={`${basePath}/favorites`} className="fav-link__inner">
         <div className="star-wrapper">
           <StarCanvas place="header-fav-ico" />
-          <span className="star-count" style={{ fontSize: count > 9 ? '0.6em' : '0.8em' }}>
+          <span
+            className="star-count"
+            style={{ fontSize: count > 9 ? '0.6em' : '0.8em' }}
+          >
             {count}
           </span>
         </div>
-        {langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.favoritesBtn}
+        {t.favoritesBtn}
       </Link>
     </div>
-
   );
 };
 

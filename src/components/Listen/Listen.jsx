@@ -1,36 +1,25 @@
-import Player from './Player/Player';
-import './Listen.css';
-import StationList from '../StationList/StationList';
-import fallbackStations from '../../../public/assets/docs/mock-api/stations.json';
-import Link from 'next/link';
-import Image from 'next/image';
-import StarCanvas from '../StarCanvas/StarCanvas';
+// components/Listen/Listen.jsx
+import ListenClient from './ListenClient';
 import langJSON from '../../../public/assets/docs/languages.json';
+import fallbackStations from '../../../public/assets/docs/mock-api/stations.json';
 
 const API = 'https://de1.api.radio-browser.info';
 
-// Получаем станцию по UUID
 const fetchStationByUUID = async (uuid) => {
   try {
-    const res = await fetch(`${API}/json/stations/byuuid/${uuid}`, {
-      cache: 'no-store',
-    });
+    const res = await fetch(`${API}/json/stations/byuuid/${uuid}`, { cache: 'no-store' });
     return await res.json();
-  } catch (err) {
-    console.error('Error fetching station by UUID:', err);
+  } catch {
     return [];
   }
 };
 
-// Получаем похожие станции по тегам (через API)
 const fetchSimilarStations = async (tags, currentUUID) => {
-  const limitedTags = tags.slice(0, 3); // ограничиваем число запросов
-
+  const limitedTags = tags.slice(0, 3);
   const responses = await Promise.all(
     limitedTags.map(tag =>
-      fetch(`${API}/json/stations/search?tag=${encodeURIComponent(tag)}&limit=200&hidebroken=true`, {
-        cache: 'no-store',
-      }).then(res => res.ok ? res.json() : [])
+      fetch(`${API}/json/stations/search?tag=${encodeURIComponent(tag)}&limit=200&hidebroken=true`, { cache: 'no-store' })
+        .then(res => res.ok ? res.json() : [])
         .catch(() => [])
     )
   );
@@ -40,7 +29,6 @@ const fetchSimilarStations = async (tags, currentUUID) => {
 
   for (const station of pool) {
     if (station.stationuuid === currentUUID) continue;
-
     if (!stationMap[station.stationuuid]) {
       stationMap[station.stationuuid] = { ...station, matchCount: 0 };
     }
@@ -55,7 +43,6 @@ const fetchSimilarStations = async (tags, currentUUID) => {
     .sort((a, b) => b.matchCount - a.matchCount);
 };
 
-// Fallback если API не сработало
 const fallbackSimilar = (tags, currentUUID) => {
   return fallbackStations
     .filter(st => st.stationuuid !== currentUUID)
@@ -73,11 +60,16 @@ const Listen = async ({ pathname, lang }) => {
   const foundArr = await fetchStationByUUID(uuid);
   const found = foundArr[0];
 
+  const isLangValid = langJSON.available.includes(lang);
+  const t = langJSON.translations[isLangValid ? lang : 'en'];
+
   if (!found) {
     return (
       <div>
-        <h1 style={{ marginTop: '40px' }}>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.stationNFTxt}</h1>
-        <p style={{color: '#fff', marginTop: '40px'}}>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.searchedByTxt}: <code>{pathname}</code></p>
+        <h1 style={{ marginTop: '40px' }}>{t.stationNFTxt}</h1>
+        <p style={{ color: '#fff', marginTop: '40px' }}>
+          {t.searchedByTxt}: <code>{pathname}</code>
+        </p>
       </div>
     );
   }
@@ -87,55 +79,19 @@ const Listen = async ({ pathname, lang }) => {
   let similar = [];
   try {
     similar = await fetchSimilarStations(selectedTags, found.stationuuid);
-  } catch {
-    // ignore error
-  }
+  } catch {}
 
   if (similar.length === 0) {
     similar = fallbackSimilar(selectedTags, found.stationuuid);
   }
 
-  const countryGenres = [found.country, found.state, found.language].filter(Boolean);
-
   return (
-    <div className='listen-container'>
-      <h1 style={{ marginTop: '40px' }}><StarCanvas stationuuid={found.stationuuid} size={30} /> {found.name}</h1>
-
-      <span style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        {found.country && (
-          <>
-            <Image
-              className='country-flag'
-              src={`https://flagsapi.com/${found.countrycode}/flat/64.png`}
-              alt={found.country ? found.country : 'Undefined country'}
-              title={found.country ? found.country : 'Undefined country'}
-              width={22}
-              height={22}
-            />
-          </>
-        )}
-        <h2 className="country-genres">{countryGenres.join(' • ')}</h2>
-      </span>
-
-      <div className="tags">
-        {found.tags ? found.tags.split(',').map((tag, i) => (
-          <div key={tag + '-' + i} className="tag">
-            <Link href={`/search?tag=${encodeURIComponent(tag)}`}>{tag}</Link>
-          </div>
-        )) : (
-          <div className='notag'>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.noTagsTxt}</div>
-        )}
-      </div>
-
-      <Player url={found.url_resolved} favicon={found.favicon} />
-
-      <h2>{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en']?.similarRadioST}</h2>
-      <StationList page={'listen'} stations={similar} lang={lang} />
-    </div>
+    <ListenClient
+      found={found}
+      similar={similar}
+      lang={lang}
+      pathname={pathname}
+    />
   );
 };
 

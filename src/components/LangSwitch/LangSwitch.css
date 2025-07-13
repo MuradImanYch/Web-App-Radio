@@ -60,3 +60,6 @@
 .lang-dropdown li:hover .lang-label {
   color: #1b1b21;
 }
+.lang-switch-container img {
+  border-radius: 3px;
+}
