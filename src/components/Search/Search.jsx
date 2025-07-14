@@ -16,7 +16,7 @@ export default function Search({ name, country, language, tag, results, pageNum,
 
   return (
     <div className="search">
-      <h1>{searchTitle}</h1>
+      <h1>{searchTitle} {pageNum && `| ${translation.pageTxt} ${pageNum}`}</h1>
       <StationList
         page={page}
         stations={results}

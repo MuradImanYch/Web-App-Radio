@@ -3,7 +3,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: #121212;
+  background: rgba(27, 27, 33, 0.8);
   color: #fff;
   display: flex;
   align-items: center;

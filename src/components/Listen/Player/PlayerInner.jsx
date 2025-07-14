@@ -7,42 +7,27 @@ import PlayPause from './PlayPause/PlayPause';
 import './Player.css';
 
 export default function PlayerInner({ station }) {
-  const { isPlaying, togglePlay } = usePlayerStore();
-
-  /* локальное состояние */
+  const { isPlaying, handleToggle, playerKey } = usePlayerStore();  // ← берём из store
   const [volume, setVolume] = useState(0.8);
   const [ready, setReady] = useState(false);
-  const [playerKey, setPlayerKey] = useState(0);           // ⭐
   const [shouldReconnect, setShouldReconnect] = useState(false);
   const playerRef = useRef(null);
 
-  /* ------------------ НОВОЕ: единая кнопка Play/Pause ------------------ */
-  const handleToggle = () => {
-    if (!isPlaying) {
-      // пользователь переводит «Pause → Play» → перезапускаем ключ,
-      // чтобы ReactPlayer размонтировался и стартовал «с живой точки»
-      setPlayerKey((k) => k + 1);
-    }
-    togglePlay();
-  };
-
-  /* ------------------ авто‑реконнект при ошибке / ended ---------------- */
-  const handleError = () => setShouldReconnect(true);
-  const handleEnded = () => setShouldReconnect(true);
-
+  /* авто‑реконнект при ошибке */
   useEffect(() => {
     if (shouldReconnect && isPlaying) {
       const t = setTimeout(() => {
-        setPlayerKey((k) => k + 1); // тоже live‑рестарт
+        // bump key → «живой» рестарт
+        usePlayerStore.setState((s) => ({ playerKey: s.playerKey + 1 }));
         setShouldReconnect(false);
       }, 3000);
       return () => clearTimeout(t);
     }
   }, [shouldReconnect, isPlaying]);
 
-  /* ------------------------- JSX ------------------------- */
   return (
     <div className="player-wrapper">
+      {/* UI‑часть */}
       <div className="circle-volume">
         <div
           className={`circle ${isPlaying ? 'playing' : ''}`}
@@ -74,6 +59,7 @@ export default function PlayerInner({ station }) {
         />
       </div>
 
+      {/* сам поток */}
       {ready && (
         <ReactPlayer
           key={playerKey}
@@ -83,20 +69,26 @@ export default function PlayerInner({ station }) {
           volume={volume}
           width="0"
           height="0"
-          onError={handleError}
-          onEnded={handleEnded}
+          config={{
+            file: {
+              forceAudio: true,          // быстрее и легче
+              attributes: { preload: 'none', playsInline: true },
+            },
+          }}
+          onError={() => setShouldReconnect(true)}
+          onEnded={() => setShouldReconnect(true)}
         />
       )}
 
-      {/* скрытый "pre‑loader" для более мягкого старта */}
+      {/* «скрытый» предварительный плеер, чтобы .onReady сработал раньше */}
       <ReactPlayer
         url={station.url}
         playing={false}
-        onReady={() => setReady(true)}
         muted
         width="0"
         height="0"
         style={{ display: 'none' }}
+        onReady={() => setReady(true)}
       />
     </div>
   );
