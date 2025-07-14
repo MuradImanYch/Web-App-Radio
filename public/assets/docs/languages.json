@@ -27,7 +27,9 @@
             "searchResultTxt": "Search results",
             "searchedByTxt": "Searched by",
             "stationNFTxt": "Station is not found",
-            "similarRadioST": "Similar radio stations"
+            "similarRadioST": "Similar radio stations",
+            "backToStationTxt": "Back to station",
+            "pauseBtn": "Pause"
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -55,7 +57,9 @@
             "searchResultTxt": "Axtarış nəticələri",
             "searchedByTxt": "Axtarış kriteriyası",
             "stationNFTxt": "Stansiya tapılmadı",
-            "similarRadioST": "Oxşar radio stansiyalar"
+            "similarRadioST": "Oxşar radio stansiyalar",
+            "backToStationTxt": "Stansiyaya qayıt",
+            "pauseBtn": "Dayandır"
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -83,7 +87,9 @@
             "searchResultTxt": "Результаты поиска",
             "searchedByTxt": "Найден по",
             "stationNFTxt": "Станция не найдена",
-            "similarRadioST": "Похожие радиостанции"
+            "similarRadioST": "Похожие радиостанции",
+            "backToStationTxt": "Назад к станции",
+            "pauseBtn": "Пауза"
         }
     }
 }

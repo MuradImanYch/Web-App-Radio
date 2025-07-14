@@ -10,15 +10,14 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header className="logoWrap">
-          <nav>
-            <LangSwitch />
-            <HeaderLogo />
-            <FavLink />
-          </nav>
-        </header>
-
         <Suspense fallback={<Preloader />}>
+          <header className="logoWrap">
+            <nav>
+              <LangSwitch />
+              <HeaderLogo />
+              <FavLink />
+            </nav>
+          </header>
           <ClientLayout>
             {children}
           </ClientLayout>

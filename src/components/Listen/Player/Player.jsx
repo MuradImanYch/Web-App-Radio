@@ -1,4 +1,3 @@
-// Player.jsx
 'use client';
 
 import { usePlayerStore } from '@/utils/store/playerStore';

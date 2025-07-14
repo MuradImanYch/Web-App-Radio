@@ -4,39 +4,40 @@ import './RadioOverlay.css';
 import Link from 'next/link';
 import { usePlayerStore } from '@/utils/store/playerStore';
 import { usePathname } from 'next/navigation';
-import PlayPause from '../Listen/Player/PlayPause/PlayPause';
-import langJSON from '../../../public/assets/docs/languages.json'; // импорт языка
-import Image from 'next/image';
+import langJSON from '../../../public/assets/docs/languages.json';
 
 const RadioOverlay = () => {
-  const { isPlaying, togglePlay, currentStation } = usePlayerStore();
+  const { isPlaying, handleToggle, currentStation } = usePlayerStore();
   const pathname = usePathname();
 
+  /* скрываем оверлей на /listen‑странице или если станции ещё нет */
   if (pathname.includes('/listen')) return null;
   if (!currentStation) return null;
 
-  // Получаем язык из URL или по умолчанию 'en'
-  const lang = (() => {
-    const parts = pathname.split('/');
-    const candidate = parts[1];
-    return langJSON.available.includes(candidate) ? candidate : 'en';
-  })();
+  /* ---------- определяем язык интерфейса так же, как в FavLink ---------- */
+  const firstSegment = pathname.split('/')[1] || '';           // "az", "ru", "" ...
+  const isLangValid  = langJSON.available.includes(firstSegment);
+  const uiLang       = isLangValid ? firstSegment : 'en';
+  const t            = langJSON.translations[uiLang];
 
-  // Строим корректную ссылку
-  const stationLink =
-    lang === 'en'
-      ? `/listen/uuid-${currentStation.stationuuid}`
-      : `/${lang}/listen/uuid-${currentStation.stationuuid}`;
+  /* ---------- путь назад к станции ---------- */
+  const listenHref = `/${uiLang}/listen/uuid-${currentStation.stationuuid}`;
 
+  /* ---------- render ---------- */
   return (
     <div className="radio-overlay">
-      <Image width={20} height={20} src={currentStation.favicon} alt={currentStation.favicon} title={currentStation.favicon} className="favicon" quality={100} />
+      <img src={currentStation.favicon} alt="favicon" className="favicon" />
+
       <span className="station-name">{currentStation.name}</span>
-      <button onClick={togglePlay}>
-        <PlayPause size={10} isPlaying={isPlaying} />
+
+      <button onClick={handleToggle}>
+        {isPlaying ? `⏸ ${t.pauseBtn}` : `▶ ${t.playBtn}`}
       </button>
-      <Link href={stationLink}>
-        <button className="back-btn">Back to station</button>
+
+      <Link href={listenHref}>
+        <button className="back-btn">
+          {t.backToStationTxt}
+        </button>
       </Link>
     </div>
   );

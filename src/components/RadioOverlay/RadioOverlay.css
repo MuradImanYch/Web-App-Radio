@@ -58,6 +58,9 @@
 .radio-overlay .back-btn:hover {
   background-color: #444;
 }
+body > div.player-wrapper {
+  display: none;
+}
 
 /* 📱 Mobile adaptation */
 @media (max-width: 600px) {
