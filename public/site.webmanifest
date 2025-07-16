@@ -1,0 +1,22 @@
+{
+  "name": "Legendary Radio",
+  "short_name": "Legradio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1b1b21",
+  "theme_color": "#1b1b21",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/assets/ico/disc-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/ico/disc-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -30,7 +30,12 @@
             "similarRadioST": "Similar radio stations",
             "backToStationTxt": "Back to station",
             "pauseBtn": "Pause",
-            "pageTxt": "Page"
+            "pageTxt": "Page",
+            "metaTitleMain": "Discover Live FM and AM Radio Stations Worldwide",
+            "metaDescMain": "Listen to live FM, AM and online radio stations from around the globe. Stream music, news, sports and podcasts free on any device.",
+            "metaKeysMain": ["online radio", "live radio", "internet radio", "FM radio", "AM radio", "music streaming", "worldwide stations", "free radio player"],
+            "metaOGDescMain": "Stream music, news, sports and podcasts from thousands of stations in one clean interface.",
+            "metaOGImgAltMain": "Legendary Radio player showing world map of stations"
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -61,7 +66,12 @@
             "similarRadioST": "Oxşar radio stansiyalar",
             "backToStationTxt": "Stansiyaya qayıt",
             "pauseBtn": "Dayandır",
-            "pageTxt": "Səhifə"
+            "pageTxt": "Səhifə",
+            "metaTitleMain": "Bütün Dünyadan FM və AM Radiolarını Dinlə",
+            "metaDescMain": "FM, AM və internet radiostansiyalarını onlayn dinlə. Musiqi, xəbərlər, idman və podkast‑lar — istənilən cihazda, pulsuz.",
+            "metaKeysMain": ["onlayn radio", "radio dinlə", "internet radio", "FM radio", "AM radio", "musiqi yayımı", "dünya radioları", "pulsuz radio pleyer"],
+            "metaOGDescMain": "Musiqi, xəbərlər, idman və podkast‑lar — minlərlə stansiya bir tətbiqdə.",
+            "metaOGImgAltMain": "Legendary Radio interfeysi dünya stansiyaları xəritəsi ilə"
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -92,7 +102,12 @@
             "similarRadioST": "Похожие радиостанции",
             "backToStationTxt": "Назад к станции",
             "pauseBtn": "Пауза",
-            "pageTxt": "Страница"
+            "pageTxt": "Страница",
+            "metaTitleMain": "Слушайте FM и AM радио со всего мира онлайн",
+            "metaDescMain": "Онлайн‑плеер для прослушивания FM, AM и интернет‑радиостанций. Музыка, новости, спорт и подкасты без регистрации и рекламы.",
+            "metaKeysMain": ["онлайн радио", "слушать радио", "интернет‑радио", "FM‑радио", "AM‑радио", "стриминг музыки", "радио со всего мира", "бесплатный радиоплеер"],
+            "metaOGDescMain": "Музыка, новости, спорт и подкасты — тысячи станций в одном приложении.",
+            "metaOGImgAltMain": "Интерфейс Legendary Radio с картой станций"
         }
     }
 }
