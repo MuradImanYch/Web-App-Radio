@@ -1,49 +1,75 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import StationList from '@/components/StationList/StationList';
+import FavoritesClient from '@/components/FavoritesClient/FavoritesClient';
 import langJSON from '../../../../public/assets/docs/languages.json';
-import { usePathname } from 'next/navigation';
+import conf from '../../../../public/assets/docs/conf.json';
 
-const API = 'https://de1.api.radio-browser.info';
+export const generateMetadata = ({ params }) => {
+  return {
+    metadataBase: new URL(conf.baseUrl),
+    applicationName: 'Legendary Radio',
+    generator: 'Next.js 14',
+    title: {
+      default: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleFavorites,
+      template: '%s | Legendary Radio',
+    },
+    description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaDescFavorites,
+    keywords: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaKeysFavorites,
+    alternates: {
+      canonical: '/' + langJSON.available.includes(params.lang) ? params.lang + '/favorites' : 'en/favorites',
+      languages: { en: '/favorites', ru: '/ru/favorites', az: '/az/favorites' },
+    },
+    openGraph: {
+      title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleFavorites,
+      description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescFavorites,
+      url: conf.baseUrl + langJSON.available.includes(params.lang) ? '/favorites' + params.lang : '/en/favorites',
+      siteName: 'Legendary Radio',
+      locale: params.lang + '_' + params.lang.toUpperCase(),
+      type: 'website',
+      images: [
+        {
+          url: '/assets/ico/logo.png',
+          width: 1200,
+          height: 630,
+          alt: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGImgAltFavorites,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleFavorites,
+      description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescFavorites,
+      images: ['/assets/ico/logo.png'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        maxSnippet: -1,
+        maxImagePreview: 'large',
+        maxVideoPreview: -1,
+      },
+    },
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon.ico',
+      apple: '/favicon.ico',
+    },
+    manifest: '/site.webmanifest',
+    themeColor: '#1b1b21',
+    colorScheme: 'dark light',
+    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
+    authors: [{ name: 'Imanych', url: 'https://github.com/MuradImanYch' }],
+    creator: 'Imanych',
+    publisher: 'Legendary Radio',
+  }
+}
 
-const FavoritesPage = ({params}) => {
-  const [favoriteStations, setFavoriteStations] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const fetchStationByUUID = async (uuid) => {
-      try {
-        const res = await fetch(`${API}/json/stations/byuuid/${uuid}`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Fetch error');
-        return await res.json();
-      } catch {
-        return null;
-      }
-    };
-
-    const loadFavorites = async () => {
-      const raw = localStorage.getItem('favoriteUuids');
-      const uuids = raw ? JSON.parse(raw) : [];
-
-      // Запускаем параллельные запросы
-      const stations = await Promise.all(uuids.map(uuid => fetchStationByUUID(uuid)));
-
-      // Фильтруем успешные ответы
-      const flatStations = stations
-        .filter(Boolean)          // отфильтровать null
-        .flat()                   // "развернуть" массив массивов в один массив
-      setFavoriteStations(flatStations);
-      setLoading(false);
-    };
-
-    loadFavorites();
-  }, []);
-
-  if (favoriteStations.length === 0) return <div>{langJSON.translations[langJSON.available.includes(pathname.split('/')[1]) ? pathname.split('/')[1] : 'en']?.favoriteStNotFound}</div>;
-
-  return <StationList page={'favorites'} stations={favoriteStations} lang={params.lang} />;
-};
-
-export default FavoritesPage;
+export default function FavoritesPage({params}) {
+  return (
+    <div>
+      <h1 style={{margin: '50px 0 40px 0'}}>{langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.favoritesBtn}</h1>
+      <FavoritesClient lang={params.lang} />
+    </div>
+  );
+}

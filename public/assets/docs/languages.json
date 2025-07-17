@@ -35,7 +35,12 @@
             "metaDescMain": "Listen to live FM, AM and online radio stations from around the globe. Stream music, news, sports and podcasts free on any device.",
             "metaKeysMain": ["online radio", "live radio", "internet radio", "FM radio", "AM radio", "music streaming", "worldwide stations", "free radio player"],
             "metaOGDescMain": "Stream music, news, sports and podcasts from thousands of stations in one clean interface.",
-            "metaOGImgAltMain": "Legendary Radio player showing world map of stations"
+            "metaOGImgAltMain": "Legendary Radio player showing world map of stations",
+            "metaTitleFavorites": "Your Favorite Radio Stations",
+            "metaDescFavorites": "Access your saved favorite FM, AM, and online radio stations in one place.",
+            "metaKeysFavorites": ["favorites", "saved radio", "liked stations", "personal radio list"],
+            "metaOGDescFavorites": "Access and manage your saved radio stations online.",
+            "metaOGImgAltFavorites": "List of favorite radio stations"
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -71,7 +76,12 @@
             "metaDescMain": "FM, AM və internet radiostansiyalarını onlayn dinlə. Musiqi, xəbərlər, idman və podkast‑lar — istənilən cihazda, pulsuz.",
             "metaKeysMain": ["onlayn radio", "radio dinlə", "internet radio", "FM radio", "AM radio", "musiqi yayımı", "dünya radioları", "pulsuz radio pleyer"],
             "metaOGDescMain": "Musiqi, xəbərlər, idman və podkast‑lar — minlərlə stansiya bir tətbiqdə.",
-            "metaOGImgAltMain": "Legendary Radio interfeysi dünya stansiyaları xəritəsi ilə"
+            "metaOGImgAltMain": "Legendary Radio interfeysi dünya stansiyaları xəritəsi ilə",
+            "metaTitleFavorites": "Seçilmiş Radio Stansiyalar",
+            "metaDescFavorites": "Sevdiyiniz FM, AM və internet radio stansiyalarını bir yerdə saxlayın və dinləyin.",
+            "metaKeysFavorites": ["seçilmiş", "sevimli radio", "saxlanılmış stansiyalar"],
+            "metaOGDescFavorites": "Sevimli radio stansiyalarınızı idarə edin və dinləyin.",
+            "metaOGImgAltFavorites": "Sevimli radio stansiyalar siyahısı"
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -107,7 +117,12 @@
             "metaDescMain": "Онлайн‑плеер для прослушивания FM, AM и интернет‑радиостанций. Музыка, новости, спорт и подкасты без регистрации и рекламы.",
             "metaKeysMain": ["онлайн радио", "слушать радио", "интернет‑радио", "FM‑радио", "AM‑радио", "стриминг музыки", "радио со всего мира", "бесплатный радиоплеер"],
             "metaOGDescMain": "Музыка, новости, спорт и подкасты — тысячи станций в одном приложении.",
-            "metaOGImgAltMain": "Интерфейс Legendary Radio с картой станций"
+            "metaOGImgAltMain": "Интерфейс Legendary Radio с картой станций",
+            "metaTitleFavorites": "Избранные радиостанции",
+            "metaDescFavorites": "Ваш список избранных FM, AM и интернет-радиостанций в одном месте.",
+            "metaKeysFavorites": ["избранное", "сохранённые станции", "любимые радиостанции"],
+            "metaOGDescFavorites": "Управляйте своими любимыми радиостанциями онлайн.",
+            "metaOGImgAltFavorites": "Список любимых радиостанций"
         }
     }
 }
