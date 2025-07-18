@@ -73,6 +73,7 @@ nav .logo img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 0 60px 0;
 }
 .not-found h1 {
   margin: 40px 0 0 0;
@@ -90,6 +91,8 @@ footer {
   justify-content: space-between;
   padding: 0 5px;
   margin: 0 0 100px 0;
+  align-items: center;
+  height: 100px;
 }
 footer a {
   text-decoration: underline;
