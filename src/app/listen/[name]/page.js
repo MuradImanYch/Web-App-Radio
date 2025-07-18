@@ -1,29 +1,32 @@
 import Listen from "@/components/Listen/Listen";
 import conf from '../../../../public/assets/docs/conf.json';
+import fetchStationByUUID from "@/utils/getUuidLS";
 
-export const generateMetadata = ({ params }) => {
+export const generateMetadata = async ({ params }) => {
+  const station = await fetchStationByUUID(params.name.split('-uuid-')[1]);
+  
   return {
     metadataBase: new URL(conf.baseUrl),
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: '[Radio Station Name] - Listen Online',
+      default: `${station[0].name} - Listen Online`,
       template: '%s | Legendary Radio',
     },
-    description: 'Enjoy free streaming of [Radio Station Name] from [Country] — live and online without registration.',
-    keywords: 'radio, online radio, [Radio Station Name], [Country] radio, listen live, Legendary Radio',
+    description: `Enjoy free streaming of ${station[0].name} from ${station[0].country} — live and online without registration.`,
+    keywords: `radio, online radio, ${station[0].name}, ${station[0].country} radio, listen live, Legendary Radio`,
     alternates: {
-      canonical: `/listen/[station-id]`, // или с языковым префиксом, если используется
+      canonical: `/listen/${params.name}`, // или с языковым префиксом, если используется
       languages: {
-        en: `/listen/[station-id]`,
-        ru: `/ru/listen/[station-id]`,
-        az: `/az/listen/[station-id]`,
+        en: `/listen/${params.name}`,
+        ru: `/ru/listen/${params.name}`,
+        az: `/az/listen/${params.name}`,
       },
     },
     openGraph: {
-      title: '[Radio Station Name] - Live Radio from [Country]',
-      description: 'Stream [Radio Station Name] from [Country] instantly online at Legendary Radio.',
-      url: `${conf.baseUrl}/listen/[station-id]`,
+      title: `${station[0].name} - Live Radio from ${station[0].country}`,
+      description: `Stream ${station[0].name} from ${station[0].country} instantly online at Legendary Radio.`,
+      url: `${conf.baseUrl}/listen/${params.name}`,
       siteName: 'Legendary Radio',
       locale: 'en_US',
       type: 'website',
@@ -32,14 +35,14 @@ export const generateMetadata = ({ params }) => {
           url: '/assets/ico/logo.png',
           width: 1200,
           height: 630,
-          alt: 'Legendary Radio - Online Streaming',
+          alt: `${station[0].name} - Online Streaming from ${station[0].country}`,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: '[Radio Station Name] - Listen Live',
-      description: 'Streaming [Radio Station Name] from [Country] on Legendary Radio.',
+      title: `${station[0].name} - Listen Live`,
+      description: `Streaming ${station[0].name} from ${station[0].country} on Legendary Radio.`,
       images: ['/assets/ico/logo.png'],
     },
     robots: {

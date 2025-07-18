@@ -1,17 +1,9 @@
 import ListenClient from './ListenClient';
 import langJSON from '../../../public/assets/docs/languages.json';
 import fallbackStations from '../../../public/assets/docs/mock-api/stations.json';
+import fetchStationByUUID from '@/utils/getUuidLS';
 
 const API = 'https://de1.api.radio-browser.info';
-
-const fetchStationByUUID = async (uuid) => {
-  try {
-    const res = await fetch(`${API}/json/stations/byuuid/${uuid}`, { cache: 'no-store' });
-    return await res.json();
-  } catch {
-    return [];
-  }
-};
 
 const fetchSimilarStations = async (tags, currentUUID) => {
   const limitedTags = tags.slice(0, 3);
