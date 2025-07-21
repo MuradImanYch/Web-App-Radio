@@ -1,6 +1,7 @@
 import Listen from "@/components/Listen/Listen";
 import conf from '../../../../public/assets/docs/conf.json';
 import fetchStationByUUID from "@/utils/getUuidLS";
+import langJSON from '../../../../public/assets/docs/languages.json';
 
 export const generateMetadata = async ({ params }) => {
   const station = await fetchStationByUUID(params.name.split('-uuid-')[1]);
@@ -10,11 +11,11 @@ export const generateMetadata = async ({ params }) => {
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: `${station[0].name} - Listen Online`,
+      default: langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name),
       template: '%s | Legendary Radio',
     },
-    description: `Enjoy free streaming of ${station[0].name} from ${station[0].country} — live and online without registration.`,
-    keywords: `radio, online radio, ${station[0].name}, ${station[0].country} radio, listen live, Legendary Radio`,
+    description: langJSON.translations.en.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
+    keywords: langJSON.translations.en.metaKeysListen.map(key => key.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country)),
     alternates: {
       canonical: `/listen/${params.name}`, // или с языковым префиксом, если используется
       languages: {
@@ -24,8 +25,8 @@ export const generateMetadata = async ({ params }) => {
       },
     },
     openGraph: {
-      title: `${station[0].name} - Live Radio from ${station[0].country}`,
-      description: `Stream ${station[0].name} from ${station[0].country} instantly online at Legendary Radio.`,
+      title: langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name),
+      description: langJSON.translations.en.metaOGDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
       url: `${conf.baseUrl}/listen/${params.name}`,
       siteName: 'Legendary Radio',
       locale: 'en_US',
@@ -35,7 +36,7 @@ export const generateMetadata = async ({ params }) => {
           url: '/assets/ico/logo.png',
           width: 1200,
           height: 630,
-          alt: `${station[0].name} - Online Streaming from ${station[0].country}`,
+          alt: langJSON.translations.en.metaOGImgAltListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
         },
       ],
     },

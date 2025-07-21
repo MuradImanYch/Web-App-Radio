@@ -40,7 +40,17 @@
             "metaDescFavorites": "Access your saved favorite FM, AM, and online radio stations in one place.",
             "metaKeysFavorites": ["favorites", "saved radio", "liked stations", "personal radio list"],
             "metaOGDescFavorites": "Access and manage your saved radio stations online.",
-            "metaOGImgAltFavorites": "List of favorite radio stations"
+            "metaOGImgAltFavorites": "List of favorite radio stations",
+            "metaTitleListen": "{{name}} - Listen Online",
+            "metaDescListen": "Enjoy free streaming of {{name}} from {{country}} — live and online without registration.",
+            "metaKeysListen": ["radio", "online radio", "{{name}}", "{{country}} radio", "listen live", "Legendary Radio"],
+            "metaOGDescListen": "Stream {{name}} from {{country}} instantly online at Legendary Radio.",
+            "metaOGImgAltListen": "{{name}} - Online Streaming from {{country}}",
+            "metaTitleSearch": "Search results for \"{{query}}\"",
+            "metaDescSearch": "Listen to radio stations matching \"{{query}}\" from around the world. Enjoy live radio streams by genre, country, or station name.",
+            "metaKeysSearch": ["radio", "search '{{query}}'", "online radio", "listen live", "Legendary Radio", "radio stations matching \"{{query}}\""],
+            "metaOGDescSearch": "Listen to radio stations matching \"{{query}}\" from around the world. Enjoy live radio streams by genre, country, or station name.",
+            "metaOGImgAltSearch": "Search results for \"{{query}}\""
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -81,7 +91,17 @@
             "metaDescFavorites": "Sevdiyiniz FM, AM və internet radio stansiyalarını bir yerdə saxlayın və dinləyin.",
             "metaKeysFavorites": ["seçilmiş", "sevimli radio", "saxlanılmış stansiyalar"],
             "metaOGDescFavorites": "Sevimli radio stansiyalarınızı idarə edin və dinləyin.",
-            "metaOGImgAltFavorites": "Sevimli radio stansiyalar siyahısı"
+            "metaOGImgAltFavorites": "Sevimli radio stansiyalar siyahısı",
+            "metaTitleListen": "{{name}} - Onlayn dinlə",
+            "metaDescListen": "{{country}} ölkəsindən {{name}} pulsuz yayımından həzz alın — qeydiyyat olmadan canlı dinləyin.",
+            "metaKeysListen": ["radio", "onlayn radio", "{{name}}", "{{country}} radio", "canlı dinlə", "Legendary Radio"],
+            "metaOGDescListen": "Legendary Radio-da {{country}} ölkəsindən {{name}} yayımını elə indicə onlayn dinləyin.",
+            "metaOGImgAltListen": "{{name}} {{country}} - Onlayn dinlə",
+            "metaTitleSearch": "\"{{query}}\" üçün axtarış nəticələri",
+            "metaDescSearch": "Dünyanın hər yerindən \"{{query}}\" ilə uyğun gələn radio stansiyalarına qulaq asın. Janr, ölkə və ya stansiya adına görə canlı radio yayımlarından həzz alın.",
+            "metaKeysSearch": ["radio", "'{{query}}' axtar", "onlayn radio", "canlı dinlə", "Legendary Radio", "\"{{query}}\" ilə uyğun gələn radio stansiyalar"],
+            "metaOGDescSearch": "Dünyanın hər yerindən \"{{query}}\" ilə uyğun gələn radio stansiyalarına qulaq asın. Janr, ölkə və ya stansiya adına görə canlı radio yayımlarından həzz alın.",
+            "metaOGImgAltSearch": "\"{{query}}\" üçün axtarış nəticələri"
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -122,7 +142,17 @@
             "metaDescFavorites": "Ваш список избранных FM, AM и интернет-радиостанций в одном месте.",
             "metaKeysFavorites": ["избранное", "сохранённые станции", "любимые радиостанции"],
             "metaOGDescFavorites": "Управляйте своими любимыми радиостанциями онлайн.",
-            "metaOGImgAltFavorites": "Список любимых радиостанций"
+            "metaOGImgAltFavorites": "Список любимых радиостанций",
+            "metaTitleListen": "{{name}} - Слушать онлайн",
+            "metaDescListen": "Наслаждайтесь бесплатным стримом {{name}} из {{country}} — в живую и без регистрации.",
+            "metaKeysListen": ["радио", "онлайн радио", "{{name}}", "{{country}} радио", "слушать в живую", "Legendary Radio"],
+            "metaOGDescListen": "Слушайте {{name}} из {{country}} онлайн прямо сейчас на Legendary Radio.",
+            "metaOGImgAltListen": "{{name}} {{country}} - Слушать онлайн",
+            "metaTitleSearch": "Результаты поиска по запросу \"{{query}}\"",
+            "metaDescSearch": "Слушайте радиостанции по запросу «{{query}}» со всего мира. Наслаждайтесь прямыми трансляциями по жанру, стране или названию станции.",
+            "metaKeysSearch": ["радио", "поиск '{{query}}'", "онлайн радио", "слушать онлайн", "Legendary Radio", "радиостанции соответствующие \"{{query}}\""],
+            "metaOGDescSearch": "Слушайте радиостанции по запросу «{{query}}» со всего мира. Наслаждайтесь прямыми трансляциями по жанру, стране или названию станции.",
+            "metaOGImgAltSearch": "Результаты поиска по запросу \"{{query}}\""
         }
     }
 }

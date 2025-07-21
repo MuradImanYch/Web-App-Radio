@@ -20,7 +20,7 @@ export const generateMetadata = ({ params }) => {
     openGraph: {
       title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleFavorites,
       description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescFavorites,
-      url: conf.baseUrl + langJSON.available.includes(params.lang) ? '/favorites' + params.lang : '/en/favorites',
+      url: conf.baseUrl + langJSON.available.includes(params.lang) ? `${params.lang}/favorites` : '/favorites',
       siteName: 'Legendary Radio',
       locale: params.lang + '_' + params.lang.toUpperCase(),
       type: 'website',

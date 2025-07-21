@@ -1,45 +1,45 @@
 import Listen from "@/components/Listen/Listen";
 import conf from '../../../../../public/assets/docs/conf.json';
+import fetchStationByUUID from "@/utils/getUuidLS";
+import langJSON from '../../../../../public/assets/docs/languages.json';
 
-export const generateMetadata = ({ params }) => {
+export const generateMetadata = async ({ params }) => {
+  const station = await fetchStationByUUID(params.name.split('-uuid-')[1]);
+  
   return {
     metadataBase: new URL(conf.baseUrl),
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: '[Radio Station Name] - Listen Online',
+      default: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name), 
       template: '%s | Legendary Radio',
     },
-    description: 'Enjoy free streaming of [Radio Station Name] from [Country] — live and online without registration.',
-    keywords: 'radio, online radio, [Radio Station Name], [Country] radio, listen live, Legendary Radio',
+    description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
+    keywords: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaKeysListen.map(key => key.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country)),
     alternates: {
-      canonical: `/listen/[station-id]`, // или с языковым префиксом, если используется
-      languages: {
-        en: `/listen/[station-id]`,
-        ru: `/ru/listen/[station-id]`,
-        az: `/az/listen/[station-id]`,
-      },
+      canonical: '/' + langJSON.available.includes(params.lang) ? params.lang + `/listen/${params.name}` : `en/listen/${params.name}`,
+      languages: { en: `/listen/${params.name}`, ru: `/ru/listen/${params.name}`, az: `/az/listen/${params.name}` },
     },
     openGraph: {
-      title: '[Radio Station Name] - Live Radio from [Country]',
-      description: 'Stream [Radio Station Name] from [Country] instantly online at Legendary Radio.',
-      url: `${conf.baseUrl}/listen/[station-id]`,
+      title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name),
+      description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
+      url: conf.baseUrl + langJSON.available.includes(params.lang) ? `${params.lang}/listen/${params.name}` : `/listen/${params.name}`,
       siteName: 'Legendary Radio',
-      locale: 'en_US',
+      locale: params.lang + '_' + params.lang.toUpperCase(),
       type: 'website',
       images: [
         {
           url: '/assets/ico/logo.png',
           width: 1200,
           height: 630,
-          alt: 'Legendary Radio - Online Streaming',
+          alt: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGImgAltListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: '[Radio Station Name] - Listen Live',
-      description: 'Streaming [Radio Station Name] from [Country] on Legendary Radio.',
+      title: `${station[0].name} - Listen Live`,
+      description: `Streaming ${station[0].name} from ${station[0].country} on Legendary Radio.`,
       images: ['/assets/ico/logo.png'],
     },
     robots: {
