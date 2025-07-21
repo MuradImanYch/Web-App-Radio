@@ -17,7 +17,7 @@ export const generateMetadata = async ({ params }) => {
     description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
     keywords: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaKeysListen.map(key => key.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country)),
     alternates: {
-      canonical: '/' + langJSON.available.includes(params.lang) ? params.lang + `/listen/${params.name}` : `en/listen/${params.name}`,
+      canonical: '/' + langJSON.available.includes(params.lang) ? params.lang + `/listen/${params.name}` : `/listen/${params.name}`,
       languages: { en: `/listen/${params.name}`, ru: `/ru/listen/${params.name}`, az: `/az/listen/${params.name}` },
     },
     openGraph: {

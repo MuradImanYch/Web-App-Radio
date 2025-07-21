@@ -2,7 +2,6 @@ import Search from "@/components/Search/Search";
 import fallbackStations from "../../../public/assets/docs/mock-api/stations.json";
 import langJSON from '../../../public/assets/docs/languages.json';
 import conf from '../../../public/assets/docs/conf.json';
-import fetchStationByUUID from "@/utils/getUuidLS";
 
 export const generateMetadata = ({ searchParams }) => {
   const {
@@ -175,7 +174,7 @@ export default async function Page({ searchParams, params }) {
       language={language}
       tag={tag}
       results={searchResults}
-      pageNum={params.page || '1'}
+      pageNum={params.page}
       page={'search'}
       lang={params.lang || 'en'}
     />

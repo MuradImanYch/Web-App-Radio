@@ -1,5 +1,103 @@
 import Search from "@/components/Search/Search";
 import fallbackStations from "../../../../../public/assets/docs/mock-api/stations.json";
+import langJSON from '../../../../../public/assets/docs/languages.json';
+import conf from '../../../../../public/assets/docs/conf.json';
+
+export const generateMetadata = ({ searchParams, params }) => {
+  const {
+    name = '',
+    country = '',
+    language = '',
+    tag = ''
+  } = searchParams;
+
+  const filters = [
+    name     && `Name – ${name}`,
+    country  && `Country – ${country}`,
+    language && `Language – ${language}`,
+    tag      && `Tag – ${tag}`
+  ].filter(Boolean).join(' • ') || 'Radio';
+
+  const queryFormatted = filters.charAt(0).toUpperCase() + filters.slice(1);
+
+  // Собираем query string вручную
+  const queryParams = new URLSearchParams();
+  if (name) queryParams.set('name', name);
+  if (language) queryParams.set('language', language);
+  if (tag) queryParams.set('tag', tag);
+  if (country) queryParams.set('country', country);
+
+  const queryStr = decodeURIComponent(queryParams.toString()); // ✅ это строка
+
+  const fullUrl = `/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
+
+  return {
+    metadataBase: new URL(conf.baseUrl),
+    applicationName: 'Legendary Radio',
+    generator: 'Next.js 14',
+    title: {
+      default: (langJSON.translations.en.metaTitleSearch + ' | ' + langJSON.translations.en.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      template: '%s | Legendary Radio',
+    },
+    description: (langJSON.translations.en.metaDescSearch + ' | ' + langJSON.translations.en.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+    keywords: langJSON.translations.en.metaKeysSearch.map(key =>
+      key.replace('{{query}}', queryFormatted)
+    ),
+    alternates: {
+      canonical: fullUrl,
+      languages: {
+        en: `/search/page/${params.page}?${queryStr}`,
+        ru: `/ru/search/page/${params.page}?${queryStr}`,
+        az: `/az/search/page/${params.page}?${queryStr}`,
+      },
+    },
+    openGraph: {
+      title: (langJSON.translations.en.metaTitleSearch + ' | ' + langJSON.translations.en.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      description: (langJSON.translations.en.metaOGDescSearch + ' | ' + langJSON.translations.en.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      url: `/search/page/${params.page}?${queryStr}`,
+      siteName: 'Legendary Radio',
+      locale: 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: '/assets/ico/logo.png',
+          width: 1200,
+          height: 630,
+          alt: langJSON.translations.en.metaOGImgAltSearch.replace('{{query}}', queryFormatted),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${queryFormatted} - Legendary Radio Search`,
+      description: `Explore radio stations matching "${queryFormatted}" on Legendary Radio.`,
+      images: ['/assets/ico/logo.png'],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        maxSnippet: -1,
+        maxImagePreview: 'large',
+        maxVideoPreview: -1,
+      },
+    },
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon.ico',
+      apple: '/favicon.ico',
+    },
+    manifest: '/site.webmanifest',
+    themeColor: '#1b1b21',
+    colorScheme: 'dark light',
+    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
+    authors: [{ name: 'Imanych', url: 'https://github.com/MuradImanYch' }],
+    creator: 'Imanych',
+    publisher: 'Legendary Radio',
+  };
+};
 
 const API_SERVER = 'https://de1.api.radio-browser.info';
 
