@@ -1,8 +1,6 @@
 const fs = require("fs");
 const axios = require("axios");
 const path = require("path");
-
-// Подключаем файл с языками и доступными префиксами
 const langJSON = require("../../public/assets/docs/languages.json");
 
 const RADIO_BROWSER_HOSTS = [
@@ -12,21 +10,26 @@ const RADIO_BROWSER_HOSTS = [
   "https://at1.api.radio-browser.info",
 ];
 
-const LANGS = langJSON.available; // например ['az', 'ru']
+const LANGS = langJSON.available;
 const BASE_URL = "https://legradio.com";
-const SITEMAP_PATH = path.join(__dirname, "sitemap-radiostations.xml");
+const SITEMAP_DIR = path.join(__dirname, "sitemaps");
+const URLS_PER_FILE = 40000;
 const LIMIT = 500;
 
-// Пример функции generateSlug (замени на свою реальную реализацию)
+// Ensure output directory exists
+if (!fs.existsSync(SITEMAP_DIR)) {
+  fs.mkdirSync(SITEMAP_DIR);
+}
+
 function generateSlug(text) {
   return text
     .toString()
     .toLowerCase()
-    .normalize("NFD") // нормализация для удаления акцентов
-    .replace(/[\u0300-\u036f]/g, "") // удаляем диакритические знаки
-    .replace(/[^a-z0-9]+/g, "-") // заменяем все кроме a-z, 0-9 на дефис
-    .replace(/^-+|-+$/g, "") // убираем дефисы в начале и конце
-    .replace(/--+/g, "-"); // заменяем двойные дефисы на один
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/--+/g, "-");
 }
 
 async function fetchAllStations() {
@@ -61,48 +64,59 @@ async function fetchAllStations() {
   return stations;
 }
 
-function generateUrlSet(stations) {
+function generateUrlsForStation(station) {
   const now = new Date().toISOString();
+  const countrySlug = generateSlug(station.country || "unknown-country");
+  const nameSlug = generateSlug(station.name || "unknown-station");
+  const slug = `${countrySlug}-${nameSlug}-uuid-${station.stationuuid}`;
 
-  const urls = stations.flatMap((station) => {
-    // Подготавливаем slug для страны и названия станции
-    const countrySlug = generateSlug(station.country || "unknown-country");
-    const nameSlug = generateSlug(station.name || "unknown-station");
-    const stationUUID = station.stationuuid;
-
-    // Формируем основной slug с uuid
-    const slug = `${countrySlug}-${nameSlug}-uuid-${stationUUID}`;
-
-    // Массив URL для всех языков
-    const urlsForStation = [];
-
-    // Английская версия без префикса
-    urlsForStation.push(`
+  const urls = [
+    `
   <url>
     <loc>${BASE_URL}/listen/${slug}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>`);
+  </url>`,
+  ];
 
-    // Другие языки с префиксом
-    LANGS.forEach((lang) => {
-      urlsForStation.push(`
+  LANGS.forEach((lang) => {
+    urls.push(`
   <url>
     <loc>${BASE_URL}/${lang}/listen/${slug}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>`);
-    });
-
-    return urlsForStation;
   });
 
+  return urls;
+}
+
+function wrapWithUrlSet(urls) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join("\n")}
 </urlset>`;
+}
+
+function wrapWithIndex(fileNames) {
+  const now = new Date().toISOString();
+
+  const sitemapEntries = fileNames
+    .map((file) => {
+      return `
+  <sitemap>
+    <loc>${BASE_URL}/sitemaps/${file}</loc>
+    <lastmod>${now}</lastmod>
+  </sitemap>`;
+    })
+    .join("\n");
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries}
+</sitemapindex>`;
 }
 
 async function generateSitemap() {
@@ -116,10 +130,28 @@ async function generateSitemap() {
 
     console.log(`✅ Fetched ${stations.length} stations.`);
 
-    const xmlContent = generateUrlSet(stations);
-    fs.writeFileSync(SITEMAP_PATH, xmlContent.trim());
+    const allUrls = stations.flatMap(generateUrlsForStation);
+    const chunks = [];
 
-    console.log(`🎉 Sitemap generated at: ${SITEMAP_PATH}`);
+    for (let i = 0; i < allUrls.length; i += URLS_PER_FILE) {
+      chunks.push(allUrls.slice(i, i + URLS_PER_FILE));
+    }
+
+    const fileNames = [];
+
+    chunks.forEach((chunk, index) => {
+      const fileName = `sitemap-radiostations-${index + 1}.xml`;
+      const filePath = path.join(SITEMAP_DIR, fileName);
+      fs.writeFileSync(filePath, wrapWithUrlSet(chunk).trim());
+      fileNames.push(fileName);
+      console.log(`📄 Created: ${fileName}`);
+    });
+
+    // Генерируем индекс
+    const indexContent = wrapWithIndex(fileNames);
+    fs.writeFileSync(path.join(SITEMAP_DIR, "sitemap-index.xml"), indexContent);
+    console.log(`📂 Sitemap index created at sitemap-index.xml`);
+
   } catch (error) {
     console.error("❌ Sitemap generation error:", error.message);
   }
