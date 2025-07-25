@@ -73,23 +73,7 @@ const poppins = Poppins({
 });
 
 const fetchTopRadio = async () => {
-  try {
-    const response = await fetch('https://de1.api.radio-browser.info/json/stations/topclick/30', { cache: 'no-cache' });
-    if (!response.ok) throw new Error("Response not OK");
-
-    const data = await response.json();
-    
-    // Если API вернул пустой массив, использовать локальные данные
-    if (!Array.isArray(data) || data.length === 0) {
-      console.warn("API вернул пустой массив. Используем резервные данные.");
-      return fallbackStations;
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Ошибка при получении данных с API. Используем резервные данные.", error);
-    return fallbackStations;
-  }
+  return fallbackStations; // всегда используем локальные данные
 };
 
 const Page = async ({params}) => {

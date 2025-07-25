@@ -20,15 +20,13 @@ export const generateMetadata = ({ searchParams }) => {
 
   const queryFormatted = filters.charAt(0).toUpperCase() + filters.slice(1);
 
-  // Собираем query string вручную
   const queryParams = new URLSearchParams();
   if (name) queryParams.set('name', name);
   if (language) queryParams.set('language', language);
   if (tag) queryParams.set('tag', tag);
   if (country) queryParams.set('country', country);
 
-  const queryStr = decodeURIComponent(queryParams.toString()); // ✅ это строка
-
+  const queryStr = decodeURIComponent(queryParams.toString());
   const fullUrl = `/search${queryStr ? `?${queryStr}` : ''}`;
 
   return {
@@ -99,23 +97,7 @@ export const generateMetadata = ({ searchParams }) => {
   };
 };
 
-
-const API_SERVER = 'https://de1.api.radio-browser.info';
-
-function buildSearchURL({ name, country, language, tag, strict }) {
-  const url = new URL(`${API_SERVER}/json/stations/search`);
-  const maybeAdd = (key, value) => value && url.searchParams.append(key, value);
-
-  maybeAdd(strict ? 'nameExact'     : 'name',     name);
-  maybeAdd(strict ? 'countryExact'  : 'country',  country);
-  maybeAdd(strict ? 'languageExact' : 'language', language);
-  maybeAdd(strict ? 'tagExact'      : 'tag',      tag);
-
-  url.searchParams.append('limit', '500');
-  url.searchParams.append('hidebroken', 'true');
-  return url.toString();
-}
-
+// 🔍 Поиск по локальному списку
 function filterLocal(stations, { name, country, language, tag, strict }) {
   const matchField = (field, value) =>
     !value ? true :
@@ -138,6 +120,7 @@ function filterLocal(stations, { name, country, language, tag, strict }) {
   });
 }
 
+// 🔧 Основной компонент страницы
 export default async function Page({ searchParams, params }) {
   const {
     name = '',
@@ -149,23 +132,9 @@ export default async function Page({ searchParams, params }) {
 
   const isStrict = strict === 'true';
 
-  let searchResults = [];
-
-  try {
-    const url = buildSearchURL({ name, country, language, tag, strict: isStrict });
-    const res = await fetch(url, { cache: 'no-store' });
-    if (res.ok) {
-      searchResults = await res.json();
-    }
-  } catch (_) {
-    // fallback ниже
-  }
-
-  if (searchResults.length === 0) {
-    searchResults = filterLocal(fallbackStations, {
-      name, country, language, tag, strict: isStrict
-    });
-  }
+  const searchResults = filterLocal(fallbackStations, {
+    name, country, language, tag, strict: isStrict
+  });
 
   return (
     <Search
@@ -174,9 +143,9 @@ export default async function Page({ searchParams, params }) {
       language={language}
       tag={tag}
       results={searchResults}
-      pageNum={params.page}
+      pageNum={params?.page || '1'}
       page={'search'}
-      lang={params.lang || 'en'}
+      lang={params?.lang || 'en'}
     />
   );
 }
