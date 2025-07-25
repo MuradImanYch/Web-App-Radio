@@ -29,7 +29,7 @@ export const generateMetadata = ({ searchParams, params }) => {
 
   const queryStr = decodeURIComponent(queryParams.toString()); // ✅ это строка
 
-  const fullUrl = `/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
+  const fullUrl = params.page === 1 ? `/search${queryStr ? `?${queryStr}` : ''}` : `/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
 
   return {
     metadataBase: new URL(conf.baseUrl),

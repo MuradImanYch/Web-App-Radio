@@ -11,6 +11,7 @@ import fallbackTags from '../../../public/assets/docs/mock-api/tags.json';
 import fallbackLanguages from '../../../public/assets/docs/mock-api/languages.json';
 import fallbackCountries from '../../../public/assets/docs/mock-api/countries.json';
 import langJSON from '../../../public/assets/docs/languages.json';
+import earth from '../../../public/assets/ico/earth.webp';
 
 export default function Filter() {
   const searchParams = useSearchParams();
@@ -33,7 +34,7 @@ export default function Filter() {
   const allCountriesOption = {
     name: langJSON.translations[lang]?.allCountries,
     iso_3166_1: 'ALL',
-    flag: 'https://pnghunter.com/get-logo.php?id=15348',
+    flag: earth,
   };
 
   const options = [allCountriesOption, ...countries];
