@@ -20,13 +20,15 @@ export const generateMetadata = ({ searchParams, params }) => {
 
   const queryFormatted = filters.charAt(0).toUpperCase() + filters.slice(1);
 
+  // Собираем query string вручную
   const queryParams = new URLSearchParams();
   if (name) queryParams.set('name', name);
   if (language) queryParams.set('language', language);
   if (tag) queryParams.set('tag', tag);
   if (country) queryParams.set('country', country);
 
-  const queryStr = decodeURIComponent(queryParams.toString());
+  const queryStr = decodeURIComponent(queryParams.toString()); // ✅ это строка
+
   const fullUrl = `/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
 
   return {
@@ -97,7 +99,22 @@ export const generateMetadata = ({ searchParams, params }) => {
   };
 };
 
-// 🔍 Фильтрация по локальному списку
+const API_SERVER = 'https://de1.api.radio-browser.info';
+
+function buildSearchURL({ name, country, language, tag, strict }) {
+  const url = new URL(`${API_SERVER}/json/stations/search`);
+  const maybeAdd = (key, value) => value && url.searchParams.append(key, value);
+
+  maybeAdd(strict ? 'nameExact'     : 'name',     name);
+  maybeAdd(strict ? 'countryExact'  : 'country',  country);
+  maybeAdd(strict ? 'languageExact' : 'language', language);
+  maybeAdd(strict ? 'tagExact'      : 'tag',      tag);
+
+  url.searchParams.append('limit', '500');
+  url.searchParams.append('hidebroken', 'true');
+  return url.toString();
+}
+
 function filterLocal(stations, { name, country, language, tag, strict }) {
   const matchField = (field, value) =>
     !value ? true :
@@ -120,7 +137,6 @@ function filterLocal(stations, { name, country, language, tag, strict }) {
   });
 }
 
-// 🔧 Главный компонент
 export default async function Page({ searchParams, params }) {
   const {
     name = '',
@@ -132,9 +148,23 @@ export default async function Page({ searchParams, params }) {
 
   const isStrict = strict === 'true';
 
-  const searchResults = filterLocal(fallbackStations, {
-    name, country, language, tag, strict: isStrict
-  });
+  let searchResults = [];
+
+  try {
+    const url = buildSearchURL({ name, country, language, tag, strict: isStrict });
+    const res = await fetch(url, { cache: 'no-store' });
+    if (res.ok) {
+      searchResults = await res.json();
+    }
+  } catch (_) {
+    // fallback ниже
+  }
+
+  if (searchResults.length === 0) {
+    searchResults = filterLocal(fallbackStations, {
+      name, country, language, tag, strict: isStrict
+    });
+  }
 
   return (
     <Search

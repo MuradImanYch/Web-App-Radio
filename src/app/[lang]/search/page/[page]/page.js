@@ -11,42 +11,40 @@ export const generateMetadata = ({ searchParams, params }) => {
     tag = ''
   } = searchParams;
 
-  const lang = langJSON.available.includes(params.lang) ? params.lang : 'en';
-  const translations = langJSON.translations[lang];
-
   const filters = [
-    name     && `${translations.nameTxt} – ${name}`,
-    country  && `${translations.countryTxt} – ${country}`,
-    language && `${translations.languageTxt} – ${language}`,
-    tag      && `${translations.tagTxt} – ${tag}`
+    name     && `${langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'Name']?.nameTxt} – ${name}`,
+    country  && `${langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'Country']?.countryTxt} – ${country}`,
+    language && `${langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'Language']?.languageTxt} – ${language}`,
+    tag      && `${langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'Tag']?.tagTxt} – ${tag}`
   ].filter(Boolean).join(' • ') || 'Radio';
 
   const queryFormatted = filters.charAt(0).toUpperCase() + filters.slice(1);
 
+  // Собираем query string вручную
   const queryParams = new URLSearchParams();
   if (name) queryParams.set('name', name);
   if (language) queryParams.set('language', language);
   if (tag) queryParams.set('tag', tag);
   if (country) queryParams.set('country', country);
 
-  const queryStr = decodeURIComponent(queryParams.toString());
+  const queryStr = decodeURIComponent(queryParams.toString()); // ✅ это строка
 
-  const fullUrl = `/${lang}/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
+  const fullUrl = `/search/page/${params.page}${queryStr ? `?${queryStr}` : ''}`;
 
   return {
     metadataBase: new URL(conf.baseUrl),
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: (langJSON.translations.en.metaTitleSearch + ' | ' + translations.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      default: (langJSON.translations.en.metaTitleSearch + ' | ' + langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
       template: '%s | Legendary Radio',
     },
-    description: (langJSON.translations.en.metaDescSearch + ' | ' + translations.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+    description: (langJSON.translations.en.metaDescSearch + ' | ' + langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
     keywords: langJSON.translations.en.metaKeysSearch.map(key =>
       key.replace('{{query}}', queryFormatted)
     ),
     alternates: {
-      canonical: fullUrl,
+      canonical: '/' + langJSON.available.includes(params.lang) ? params.lang + fullUrl : fullUrl,
       languages: {
         en: `/search/page/${params.page}?${queryStr}`,
         ru: `/ru/search/page/${params.page}?${queryStr}`,
@@ -54,11 +52,11 @@ export const generateMetadata = ({ searchParams, params }) => {
       },
     },
     openGraph: {
-      title: (langJSON.translations.en.metaTitleSearch + ' | ' + translations.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
-      description: (langJSON.translations.en.metaOGDescSearch + ' | ' + translations.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
-      url: conf.baseUrl + fullUrl,
+      title: (langJSON.translations.en.metaTitleSearch + ' | ' + langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      description: (langJSON.translations.en.metaOGDescSearch + ' | ' + langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.pageTxt + ' ' + params.page).replace('{{query}}', queryFormatted),
+      url: conf.baseUrl + langJSON.available.includes(params.lang) ? `${params.lang}/search?${queryStr}` : `/search?${queryStr}`,
       siteName: 'Legendary Radio',
-      locale: `${lang}_${lang.toUpperCase()}`,
+      locale: params.lang + '_' + params.lang.toUpperCase(),
       type: 'website',
       images: [
         {
@@ -101,6 +99,22 @@ export const generateMetadata = ({ searchParams, params }) => {
   };
 };
 
+const API_SERVER = 'https://de1.api.radio-browser.info';
+
+function buildSearchURL({ name, country, language, tag, strict }) {
+  const url = new URL(`${API_SERVER}/json/stations/search`);
+  const maybeAdd = (key, value) => value && url.searchParams.append(key, value);
+
+  maybeAdd(strict ? 'nameExact'     : 'name',     name);
+  maybeAdd(strict ? 'countryExact'  : 'country',  country);
+  maybeAdd(strict ? 'languageExact' : 'language', language);
+  maybeAdd(strict ? 'tagExact'      : 'tag',      tag);
+
+  url.searchParams.append('limit', '500');
+  url.searchParams.append('hidebroken', 'true');
+  return url.toString();
+}
+
 function filterLocal(stations, { name, country, language, tag, strict }) {
   const matchField = (field, value) =>
     !value ? true :
@@ -134,9 +148,23 @@ export default async function Page({ searchParams, params }) {
 
   const isStrict = strict === 'true';
 
-  const searchResults = filterLocal(fallbackStations, {
-    name, country, language, tag, strict: isStrict
-  });
+  let searchResults = [];
+
+  try {
+    const url = buildSearchURL({ name, country, language, tag, strict: isStrict });
+    const res = await fetch(url, { cache: 'no-store' });
+    if (res.ok) {
+      searchResults = await res.json();
+    }
+  } catch (_) {
+    // fallback ниже
+  }
+
+  if (searchResults.length === 0) {
+    searchResults = filterLocal(fallbackStations, {
+      name, country, language, tag, strict: isStrict
+    });
+  }
 
   return (
     <Search
