@@ -57,6 +57,9 @@
 .filter .Countries-module__vD6aXW__selectBox {
     color: #fff !important;
 }
+.filter .select-opt span {
+    color: #fff;
+}
 
 
 @media (min-width: 600px) {
