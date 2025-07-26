@@ -51,7 +51,7 @@
     height: 50px;
     font-size: 0.9em;
 }
-.filter .Countries-module__vD6aXW__options {
+.filter .select-opt > div > div:nth-child(2) {
     min-height: 400px;
 }
 .filter .Countries-module__vD6aXW__selectBox {
