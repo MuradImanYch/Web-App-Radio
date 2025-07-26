@@ -6,7 +6,7 @@ const notFound = () => {
     return (
         <div className='not-found'>
             <h1>Page not found | 404</h1>
-            <Image src={ico} width={180} height={180} alt='Not found' title='Not found' placeholder={'empty'} quality={100} />
+            <Image src={ico} width={180} height={180} alt='Not found' title='Not found' placeholder={'empty'} />
             <Link href={'/'}>Back to main page</Link>
         </div>
     );

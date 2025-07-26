@@ -13,7 +13,6 @@
   z-index: 1000;
   border-top: 1px solid #2c2c2c;
   backdrop-filter: blur(8px);
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .radio-overlay .favicon {

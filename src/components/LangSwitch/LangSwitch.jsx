@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import azFlag from '../../../public/assets/ico/az.png';
-import ruFlag from '../../../public/assets/ico/ru.png';
-import enFlag from '../../../public/assets/ico/en.png';
+import azFlag from '../../../public/assets/ico/az.webp';
+import ruFlag from '../../../public/assets/ico/ru.webp';
+import enFlag from '../../../public/assets/ico/en.webp';
 import './LangSwitch.css';
 
 const languages = [
@@ -65,8 +65,8 @@ const LangSwitch = () => {
           src={activeLang.flag}
           alt={activeLang.label}
           title={activeLang.label}
-          width={27}
-          height={20}
+          width={29}
+          height={22}
           placeholder="empty"
         />
         <span className="arrow">{isOpen ? '▲' : '▼'}</span>

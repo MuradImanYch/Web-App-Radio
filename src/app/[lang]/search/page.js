@@ -60,7 +60,7 @@ export const generateMetadata = ({ searchParams, params }) => {
       type: 'website',
       images: [
         {
-          url: '/assets/ico/logo.png',
+          url: '/assets/ico/logo.webp',
           width: 1200,
           height: 630,
           alt: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGImgAltSearch.replace('{{query}}', queryFormatted),
@@ -71,7 +71,7 @@ export const generateMetadata = ({ searchParams, params }) => {
       card: 'summary_large_image',
       title: `${queryFormatted} - Legendary Radio Search`,
       description: `Explore radio stations matching "${queryFormatted}" on Legendary Radio.`,
-      images: ['/assets/ico/logo.png'],
+      images: ['/assets/ico/logo.webp'],
     },
     robots: {
       index: true,

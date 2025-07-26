@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import Image           from 'next/image';
 import Link            from 'next/link';
 
-import logo     from '../../../public/assets/ico/logo.png';
+import logo     from '../../../public/assets/ico/logo.webp';
 import langJSON from '../../../public/assets/docs/languages.json';
 
 const HeaderLogo = () => {

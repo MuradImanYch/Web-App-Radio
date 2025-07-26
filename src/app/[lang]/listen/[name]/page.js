@@ -29,7 +29,7 @@ export const generateMetadata = async ({ params }) => {
       type: 'website',
       images: [
         {
-          url: '/assets/ico/logo.png',
+          url: '/assets/ico/logo.webp',
           width: 1200,
           height: 630,
           alt: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGImgAltListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
@@ -40,7 +40,7 @@ export const generateMetadata = async ({ params }) => {
       card: 'summary_large_image',
       title: `${station[0].name} - Listen Live`,
       description: `Streaming ${station[0].name} from ${station[0].country} on Legendary Radio.`,
-      images: ['/assets/ico/logo.png'],
+      images: ['/assets/ico/logo.webp'],
     },
     robots: {
       index: true,

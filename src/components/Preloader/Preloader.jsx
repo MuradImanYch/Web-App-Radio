@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import './Preloader.css';
-import discLogo from '../../../public/assets/ico/disc-logo.png';
+import discLogo from '../../../public/assets/ico/disc-logo.webp';
 
 const Preloader = () => {
     return (

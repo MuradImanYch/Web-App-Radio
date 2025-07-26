@@ -28,7 +28,7 @@ export const generateMetadata = ({ params }) => {
       type: 'website',
       images: [
         {
-          url: '/assets/ico/logo.png',
+          url: '/assets/ico/logo.webp',
           width: 1200,
           height: 630,
           alt: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGImgAltMain,
@@ -39,7 +39,7 @@ export const generateMetadata = ({ params }) => {
       card: 'summary_large_image',
       title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleMain,
       description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescMain,
-      images: ['/assets/ico/logo.png'],
+      images: ['/assets/ico/logo.webp'],
     },
     robots: {
       index: true,

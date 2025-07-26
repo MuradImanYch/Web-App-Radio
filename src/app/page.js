@@ -27,7 +27,7 @@ export const metadata = {
     type: 'website',
     images: [
       {
-        url: '/assets/ico/logo.png',
+        url: '/assets/ico/logo.webp',
         width: 1200,
         height: 630,
         alt: langJSON.translations.en.metaOGImgAltMain,
@@ -38,7 +38,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: langJSON.translations.en.metaTitleMain,
     description: langJSON.translations.en.metaOGDescMain,
-    images: ['/assets/ico/logo.png'],
+    images: ['/assets/ico/logo.webp'],
   },
   robots: {
     index: true,

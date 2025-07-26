@@ -9,7 +9,7 @@ const poppins = Poppins({
 });
 
 import generateSlug from '../../utils/generateSlug';
-import discLogo     from '../../../public/assets/ico/disc-logo.png';
+import discLogo     from '../../../public/assets/ico/disc-logo.webp';
 
 import StarCanvas  from '../StarCanvas/StarCanvas';
 import Pagination  from './Pagination/Pagination';
@@ -93,7 +93,6 @@ const StationList = ({
                   alt={displayName}
                   title={displayName}
                   placeholder="empty"
-                  quality={100}
                 />
 
                 <div className="station-info-wrap">
@@ -114,7 +113,6 @@ const StationList = ({
                         alt={displayCtry}
                         title={displayCtry}
                         placeholder="empty"
-                        quality={100}
                       />
                       &nbsp;{displayCtry}
                     </span>
