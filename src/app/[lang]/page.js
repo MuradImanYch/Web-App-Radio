@@ -16,7 +16,7 @@ export const generateMetadata = ({ params }) => {
     description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaDescMain,
     keywords: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaKeysMain,
     alternates: {
-      canonical: langJSON.available.includes(params.lang) ? '/' + params.lang : '/en',
+      canonical: langJSON.available.includes(params.lang) ? '/' + params.lang : '/',
       languages: { en: '/', ru: '/ru', az: '/az' },
     },
     openGraph: {
