@@ -82,6 +82,7 @@ const Page = async ({params}) => {
   return (
     <div>
       <h1 className={poppins.className} style={{ margin: '50px 0 0 0' }}>{langJSON.translations[params.lang]?.mainH1}</h1>
+      <p className="main-p">{langJSON.translations[params.lang]?.pTextMain}</p>
       <Main lang={params.lang} stations={topRadio} />
     </div>
   );

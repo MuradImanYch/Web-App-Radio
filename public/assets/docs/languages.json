@@ -50,7 +50,8 @@
             "metaDescSearch": "Listen to radio stations matching \"{{query}}\" from around the world. Enjoy live radio streams by genre, country, or station name.",
             "metaKeysSearch": ["radio", "search '{{query}}'", "online radio", "listen live", "Legendary Radio", "radio stations matching \"{{query}}\""],
             "metaOGDescSearch": "Listen to radio stations matching \"{{query}}\" from around the world. Enjoy live radio streams by genre, country, or station name.",
-            "metaOGImgAltSearch": "Search results for \"{{query}}\""
+            "metaOGImgAltSearch": "Search results for \"{{query}}\"",
+            "pTextMain": "Listen to live FM and AM radio stations from around the world. Discover thousands of online radio streams by genre, country or language. Legendary Radio lets you enjoy free internet radio anywhere, anytime."
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -101,7 +102,8 @@
             "metaDescSearch": "Dünyanın hər yerindən \"{{query}}\" ilə uyğun gələn radio stansiyalarına qulaq asın. Janr, ölkə və ya stansiya adına görə canlı radio yayımlarından həzz alın.",
             "metaKeysSearch": ["radio", "'{{query}}' axtar", "onlayn radio", "canlı dinlə", "Legendary Radio", "\"{{query}}\" ilə uyğun gələn radio stansiyalar"],
             "metaOGDescSearch": "Dünyanın hər yerindən \"{{query}}\" ilə uyğun gələn radio stansiyalarına qulaq asın. Janr, ölkə və ya stansiya adına görə canlı radio yayımlarından həzz alın.",
-            "metaOGImgAltSearch": "\"{{query}}\" üçün axtarış nəticələri"
+            "metaOGImgAltSearch": "\"{{query}}\" üçün axtarış nəticələri",
+            "pTextMain": "Dünyanın hər yerindən canlı FM və AM radio stansiyalarını dinləyin. Onlayn radio yayımını janr, ölkə və ya dilə görə kəşf edin. Legendary Radio ilə pulsuz internet radiosunun həzzini çıxarın."
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -152,7 +154,8 @@
             "metaDescSearch": "Слушайте радиостанции по запросу «{{query}}» со всего мира. Наслаждайтесь прямыми трансляциями по жанру, стране или названию станции.",
             "metaKeysSearch": ["радио", "поиск '{{query}}'", "онлайн радио", "слушать онлайн", "Legendary Radio", "радиостанции соответствующие \"{{query}}\""],
             "metaOGDescSearch": "Слушайте радиостанции по запросу «{{query}}» со всего мира. Наслаждайтесь прямыми трансляциями по жанру, стране или названию станции.",
-            "metaOGImgAltSearch": "Результаты поиска по запросу \"{{query}}\""
+            "metaOGImgAltSearch": "Результаты поиска по запросу \"{{query}}\"",
+            "pTextMain": "Слушайте прямой эфир FM и AM радиостанций со всего мира. Откройте для себя онлайн-радио по жанрам, странам и языкам. Legendary Radio — это удобный способ слушать интернет-радио бесплатно в любое время."
         }
     }
 }
