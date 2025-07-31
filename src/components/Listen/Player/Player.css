@@ -114,3 +114,18 @@
   background: limegreen;
   border: none;
 }
+
+.loader {
+  width: 35px;
+  height: 35px;
+  border: 3px solid #fff;
+  border-top: 3px solid #f43f5e;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

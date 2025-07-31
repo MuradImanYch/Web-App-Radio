@@ -1,40 +1,50 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { usePlayerStore } from '@/utils/store/playerStore';
 import PlayPause from './PlayPause/PlayPause';
 import './Player.css';
 
 export default function PlayerInner({ station }) {
-  const { isPlaying, handleToggle, playerKey } = usePlayerStore();  // ← берём из store
+  const { isPlaying, handleToggle, playerKey } = usePlayerStore();
   const [volume, setVolume] = useState(0.8);
   const [ready, setReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [shouldReconnect, setShouldReconnect] = useState(false);
   const playerRef = useRef(null);
 
-  /* авто‑реконнект при ошибке */
+  // Reconnect stream on error
   useEffect(() => {
     if (shouldReconnect && isPlaying) {
       const t = setTimeout(() => {
-        // bump key → «живой» рестарт
-        usePlayerStore.setState((s) => ({ playerKey: s.playerKey + 1 }));
+        usePlayerStore.setState((s) => ({
+          playerKey: s.playerKey + 1,
+        }));
         setShouldReconnect(false);
+        setIsLoading(true);
+        setReady(false);
       }, 3000);
       return () => clearTimeout(t);
     }
   }, [shouldReconnect, isPlaying]);
 
+  // Start playing after ready
+  useEffect(() => {
+    if (ready && isPlaying) {
+      playerRef.current?.getInternalPlayer()?.play?.();
+    }
+  }, [ready, isPlaying]);
+
   return (
     <div className="player-wrapper">
-      {/* UI‑часть */}
       <div className="circle-volume">
         <div
-          className={`circle ${isPlaying ? 'playing' : ''}`}
+          className={`circle ${!isLoading ? 'playing' : ''}`}
           onClick={handleToggle}
         >
           <div
-            className={`bgImg ${isPlaying ? 'rotating' : ''}`}
+            className={`bgImg ${!isLoading ? 'rotating' : ''}`}
             style={{
               backgroundImage: `url(${station.favicon})`,
               backgroundSize: 'cover',
@@ -43,7 +53,11 @@ export default function PlayerInner({ station }) {
             }}
           />
           <div className="play-button">
-            <PlayPause isPlaying={isPlaying} />
+            {isLoading ? (
+              <div className="loader" />
+            ) : (
+              <PlayPause isPlaying={isPlaying} />
+            )}
           </div>
           <div className="equalizer"><span /><span /><span /><span /></div>
         </div>
@@ -59,7 +73,7 @@ export default function PlayerInner({ station }) {
         />
       </div>
 
-      {/* сам поток */}
+      {/* Поток аудио */}
       {ready && (
         <ReactPlayer
           key={playerKey}
@@ -71,25 +85,31 @@ export default function PlayerInner({ station }) {
           height="0"
           config={{
             file: {
-              forceAudio: true,          // быстрее и легче
-              attributes: { preload: 'none', playsInline: true },
+              forceAudio: true,
+              attributes: { preload: 'auto', playsInline: true },
             },
           }}
           onError={() => setShouldReconnect(true)}
           onEnded={() => setShouldReconnect(true)}
+          onStart={() => setIsLoading(false)}
         />
       )}
 
-      {/* «скрытый» предварительный плеер, чтобы .onReady сработал раньше */}
-      <ReactPlayer
-        url={station.url}
-        playing={false}
-        muted
-        width="0"
-        height="0"
-        style={{ display: 'none' }}
-        onReady={() => setReady(true)}
-      />
+      {/* Промежуточный "скрытый" preload-плеер */}
+      {!ready && (
+        <ReactPlayer
+          url={station.url}
+          playing={false}
+          muted
+          width="0"
+          height="0"
+          style={{ display: 'none' }}
+          onReady={() => {
+            setReady(true);
+            setIsLoading(false);
+          }}
+        />
+      )}
     </div>
   );
 }
