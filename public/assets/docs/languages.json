@@ -51,7 +51,9 @@
             "metaKeysSearch": ["radio", "search '{{query}}'", "online radio", "listen live", "Legendary Radio", "radio stations matching \"{{query}}\""],
             "metaOGDescSearch": "Listen to radio stations matching \"{{query}}\" from around the world. Enjoy live radio streams by genre, country, or station name.",
             "metaOGImgAltSearch": "Search results for \"{{query}}\"",
-            "pTextMain": "Listen to live FM and AM radio stations from around the world. Discover thousands of online radio streams by genre, country or language. Legendary Radio lets you enjoy free internet radio anywhere, anytime."
+            "pTextMain": "Legendary Radio is a platform where you can listen live to thousands of FM and AM radio stations from around the world. Browse free online radio by genre, language, or country and enjoy high-quality streaming anytime, anywhere. Whether it’s pop, rock, jazz, or talk shows, Legendary Radio connects you to local and international stations without registration. Discover internet radio easily and experience music, news, and podcasts from trusted broadcasters worldwide.",
+            "pTextFooter": "Legendary Radio is a free internet radio directory connecting listeners to live FM and AM stations worldwide. Discover music, news, and podcasts by genre, language, and country. Enjoy seamless streaming with no registration.",
+            "h2SinglePage": "Listen to {{name}} live online from {{country}}. Enjoy streaming high-quality {{tag}} music and shows, available 24/7 on Legendary Radio. Tune in to the best of {{language}} radio stations without registration"
         },
         "az": {
             "mainH1": "Dünyanın hər yerindən Canlı FM və AM Radio Stansiyalarını kəşf edin",
@@ -103,7 +105,9 @@
             "metaKeysSearch": ["radio", "'{{query}}' axtar", "onlayn radio", "canlı dinlə", "Legendary Radio", "\"{{query}}\" ilə uyğun gələn radio stansiyalar"],
             "metaOGDescSearch": "Dünyanın hər yerindən \"{{query}}\" ilə uyğun gələn radio stansiyalarına qulaq asın. Janr, ölkə və ya stansiya adına görə canlı radio yayımlarından həzz alın.",
             "metaOGImgAltSearch": "\"{{query}}\" üçün axtarış nəticələri",
-            "pTextMain": "Dünyanın hər yerindən canlı FM və AM radio stansiyalarını dinləyin. Onlayn radio yayımını janr, ölkə və ya dilə görə kəşf edin. Legendary Radio ilə pulsuz internet radiosunun həzzini çıxarın."
+            "pTextMain": "Legendary Radio – dünyanın hər yerindən FM və AM radio stansiyalarını onlayn dinləyə biləcəyiniz platformadır. Sevimli janr, ölkə və ya dilə görə minlərlə pulsuz radio stansiyasını dinləyin və keyfiyyətli radio yayımından istənilən vaxt, istənilən yerdə həzz alın. Musiqi, xəbər və podkastları rahat interfeys ilə asanlıqla tapın və qeydiyyat olmadan istifadə edin.",
+            "pTextFooter": "Legendary Radio – dünya üzrə FM və AM radio stansiyalarını bir araya gətirən pulsuz internet radio kataloqudur. Musiqi, xəbər və podkastları janr, dil və ölkəyə görə tapın. Qeydiyyatsız və limitsiz dinləyin.",
+            "h2SinglePage": "{{country}} ölkəsindən {{name}} radiostansiyasını canlı dinləyin. {{tag}} musiqisi və verilişlərini 24/7 keyfiyyətli səslə Legendary Radio üzərindən izləyin. Qeydiyyatsız ən yaxşı {{language}} dilində radio kanallarını dinləyin"
         },
         "ru": {
             "mainH1": "Откройте для себя прямые трансляции FM и AM радиостанций со всего мира",
@@ -155,7 +159,9 @@
             "metaKeysSearch": ["радио", "поиск '{{query}}'", "онлайн радио", "слушать онлайн", "Legendary Radio", "радиостанции соответствующие \"{{query}}\""],
             "metaOGDescSearch": "Слушайте радиостанции по запросу «{{query}}» со всего мира. Наслаждайтесь прямыми трансляциями по жанру, стране или названию станции.",
             "metaOGImgAltSearch": "Результаты поиска по запросу \"{{query}}\"",
-            "pTextMain": "Слушайте прямой эфир FM и AM радиостанций со всего мира. Откройте для себя онлайн-радио по жанрам, странам и языкам. Legendary Radio — это удобный способ слушать интернет-радио бесплатно в любое время."
+            "pTextMain": "Legendary Radio — это платформа для прослушивания тысяч FM и AM радиостанций со всего мира в режиме онлайн. Слушайте бесплатное интернет-радио по жанрам, странам и языкам, наслаждаясь качественным стримингом в любое время. Выберите любимые музыкальные станции, новости или подкасты и откройте для себя новые радиоканалы без регистрации. Legendary Radio предлагает удобный способ слушать радиостанции онлайн, где бы вы ни находились.",
+            "pTextFooter": "Legendary Radio — это бесплатный каталог интернет-радио, который объединяет слушателей с FM и AM радиостанциями по всему миру. Открывайте музыку, новости и подкасты по жанрам, языкам и странам. Без регистрации и ограничений.",
+            "h2SinglePage": "Слушайте {{name}} онлайн из страны {{country}}. Наслаждайтесь качественным потоком {{tag}} музыки и программ в любое время на Legendary Radio. Включайтесь в лучшие радиостанции на {{language}} языке без регистрации"
         }
     }
 }

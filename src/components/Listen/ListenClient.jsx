@@ -33,10 +33,7 @@ export default function ListenClient({ found, similar, lang, pathname }) {
   return (
     <div className="listen-container">
       <h1 className={pacifico.className} style={{ marginTop: '40px' }}>
-        <StarCanvas stationuuid={found.stationuuid} size={30} /> {found.name}
-      </h1>
-
-      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <StarCanvas stationuuid={found.stationuuid} size={30} /> 
         {found.country && (
           <Image
             className="country-flag"
@@ -47,7 +44,11 @@ export default function ListenClient({ found, similar, lang, pathname }) {
             height={22}
           />
         )}
-        <h2 className="country-genres">{countryGenres.join(' • ')}</h2>
+        {found.name}
+      </h1>
+
+      <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <h2 className="country-genres">{langJSON.translations[langJSON.available.includes(lang) ? lang : 'en'].h2SinglePage.replace('{{name}}', found.name).replace('{{country}}', found.country).replace('{{language}}', found.language).replace('{{tag}}', found.tags.split(',')[0] === 'music' ? found.tags.split(',')[1] : found.tags.split(',')[0])}</h2>
       </span>
 
       <div className="tags">

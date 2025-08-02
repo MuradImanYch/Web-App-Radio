@@ -1,3 +1,6 @@
+.listen-container h1 img {
+  margin: 0 10px 0 0;
+}
 .listen-container .star-canvas {
   margin: 0 0 10px 10px;
 }
@@ -33,14 +36,11 @@
   text-align: center;
   color: #fff;
 }
-.listen-container h2.country-genres {
+.listen-container .country-genres {
   color: silver;
   font-weight: normal;
   font-size: 1em;
   margin: 20px 0 10px 0 !important;
-}
-.listen-container .country-flag {
-  margin: 0 6px -5px 0;
 }
 
 @media (min-width: 1000px) {

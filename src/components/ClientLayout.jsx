@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Filter from '@/components/Filter/Filter';
 import RadioOverlay from './RadioOverlay/RadioOverlay';
 import Player from './Listen/Player/Player';
+import Footer from './Footer/Footer';
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ export default function ClientLayout({ children }) {
       {children}
       {!isListenPage && <Player />}
       <RadioOverlay />
+      <Footer />
     </>
   );
 }
