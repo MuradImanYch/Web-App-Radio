@@ -26,9 +26,11 @@ const RadioOverlay = () => {
   /* ---------- render ---------- */
   return (
     <div className="radio-overlay">
-      <img src={currentStation.favicon} alt="favicon" className="favicon" />
+      <div className="icoName">
+        <img src={currentStation.favicon} alt="favicon" className="favicon" />
 
-      <span className="station-name">{currentStation.name}</span>
+        <span className="station-name">{currentStation.name}</span>
+      </div>
 
       <button onClick={handleToggle}>
         {isPlaying ? `⏸ ${t.pauseBtn}` : `▶ ${t.playBtn}`}

@@ -60,6 +60,10 @@
 body > div.player-wrapper {
   display: none;
 }
+.radio-overlay .icoName {
+  display: flex;
+  align-items: center;
+}
 
 /* 📱 Mobile adaptation */
 @media (max-width: 600px) {
@@ -78,11 +82,18 @@ body > div.player-wrapper {
 
   .radio-overlay .station-name {
     width: 100%;
-    font-size: 0.95rem;
+    font-size: 0.8em;
   }
 
   .radio-overlay button {
     width: 100%;
     padding: 10px;
+    margin-left: 0;
+  }
+  .radio-overlay a {
+    width: 100%;
+  }
+  .radio-overlay .icoName span {
+    margin: 0 0 0 10px;
   }
 }
