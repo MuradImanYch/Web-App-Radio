@@ -32,15 +32,17 @@ const RadioOverlay = () => {
         <span className="station-name">{currentStation.name}</span>
       </div>
 
-      <button onClick={handleToggle}>
-        {isPlaying ? `⏸ ${t.pauseBtn}` : `▶ ${t.playBtn}`}
-      </button>
-
-      <Link href={listenHref}>
-        <button className="back-btn">
-          {t.backToStationTxt}
+      <div className="btns">
+        <button onClick={handleToggle}>
+          {isPlaying ? `⏸ ${t.pauseBtn}` : `▶ ${t.playBtn}`}
         </button>
-      </Link>
+
+        <Link href={listenHref}>
+          <button className="back-btn">
+            {t.backToStationTxt}
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

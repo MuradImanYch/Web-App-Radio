@@ -11,7 +11,7 @@ export const generateMetadata = async ({ params }) => {
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name),
+      default: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name),
       template: '%s | Legendary Radio',
     },
     description: langJSON.translations.en.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
@@ -25,7 +25,7 @@ export const generateMetadata = async ({ params }) => {
       },
     },
     openGraph: {
-      title: langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name),
+      title: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name),
       description: langJSON.translations.en.metaOGDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
       url: `${conf.baseUrl}/listen/${params.name}`,
       siteName: 'Legendary Radio',

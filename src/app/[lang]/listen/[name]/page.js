@@ -11,7 +11,7 @@ export const generateMetadata = async ({ params }) => {
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name), 
+      default: station[0].country ? langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListenNotCountry.replace('{{name}}', station[0].name), 
       template: '%s | Legendary Radio',
     },
     description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
@@ -21,7 +21,7 @@ export const generateMetadata = async ({ params }) => {
       languages: { en: `/listen/${params.name}`, ru: `/ru/listen/${params.name}`, az: `/az/listen/${params.name}` },
     },
     openGraph: {
-      title: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name),
+      title: station[0].country ? langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaTitleListenNotCountry.replace('{{name}}', station[0].name),
       description: langJSON.translations[langJSON.available.includes(params.lang) ? params.lang : 'en']?.metaOGDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
       url: conf.baseUrl + langJSON.available.includes(params.lang) ? `${params.lang}/listen/${params.name}` : `/listen/${params.name}`,
       siteName: 'Legendary Radio',

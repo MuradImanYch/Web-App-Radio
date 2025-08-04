@@ -85,11 +85,22 @@ body > div.player-wrapper {
     font-size: 0.8em;
   }
 
-  .radio-overlay button {
+  /* .radio-overlay button {
     width: 100%;
     padding: 10px;
     margin-left: 0;
-  }
+  } */
+   .radio-overlay .btns {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 0 0;
+    width: 100%;
+   }
+   .radio-overlay .btns button {
+    margin: 0 0 10px 0;
+    width: 100%;
+    height: 40px;
+   }
   .radio-overlay a {
     width: 100%;
   }
