@@ -5,30 +5,40 @@ import Link from 'next/link';
 import { usePlayerStore } from '@/utils/store/playerStore';
 import { usePathname } from 'next/navigation';
 import langJSON from '../../../public/assets/docs/languages.json';
+import generateSlug from '@/utils/generateSlug';
+import getUuidLS from '@/utils/getUuidLS';
+import { useEffect, useState } from 'react';
 
 const RadioOverlay = () => {
   const { isPlaying, handleToggle, currentStation } = usePlayerStore();
   const pathname = usePathname();
 
-  /* скрываем оверлей на /listen‑странице или если станции ещё нет */
+  const [getByUuid, setGetByUuid] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (currentStation) {
+        const data = await getUuidLS(currentStation.stationuuid);
+        setGetByUuid(data);
+      }
+    };
+    fetchData();
+  }, [currentStation]);
+
   if (pathname.includes('/listen')) return null;
   if (!currentStation) return null;
 
-  /* ---------- определяем язык интерфейса так же, как в FavLink ---------- */
-  const firstSegment = pathname.split('/')[1] || '';           // "az", "ru", "" ...
-  const isLangValid  = langJSON.available.includes(firstSegment);
-  const uiLang       = isLangValid ? firstSegment : 'en';
-  const t            = langJSON.translations[uiLang];
+  const firstSegment = pathname.split('/')[1] || '';
+  const isLangValid = langJSON.available.includes(firstSegment);
+  const uiLang = isLangValid ? firstSegment : 'en';
+  const t = langJSON.translations[uiLang];
 
-  /* ---------- путь назад к станции ---------- */
-  const listenHref = `/${uiLang}/listen/uuid-${currentStation.stationuuid}`;
+  const listenHref = `/${uiLang}/listen/${getByUuid[0].country && generateSlug(getByUuid[0].country) + '-'}${generateSlug(currentStation.name)}-uuid-${currentStation.stationuuid}`;
 
-  /* ---------- render ---------- */
   return (
     <div className="radio-overlay">
       <div className="icoName">
         <img src={currentStation.favicon} alt="favicon" className="favicon" />
-
         <span className="station-name">{currentStation.name}</span>
       </div>
 

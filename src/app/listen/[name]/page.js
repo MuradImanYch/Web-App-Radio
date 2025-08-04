@@ -2,9 +2,15 @@ import Listen from "@/components/Listen/Listen";
 import conf from '../../../../public/assets/docs/conf.json';
 import fetchStationByUUID from "@/utils/getUuidLS";
 import langJSON from '../../../../public/assets/docs/languages.json';
+import generateSlug from "@/utils/generateSlug";
+import { notFound } from "next/navigation";
 
 export const generateMetadata = async ({ params }) => {
   const station = await fetchStationByUUID(params.name.split('-uuid-')[1]);
+
+  if((station[0]?.country && generateSlug(station[0]?.country) + '-') + generateSlug(station[0]?.name) + '-uuid-' + station[0]?.stationuuid !== params.name) {
+    notFound();
+  }
   
   return {
     metadataBase: new URL(conf.baseUrl),

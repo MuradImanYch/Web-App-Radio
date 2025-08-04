@@ -80,7 +80,7 @@ const StationList = ({
 
           /* строим ссылки */
           const listenHref   =
-            `${basePath}/listen/${generateSlug(stCountry)}-${generateSlug(stName)}-uuid-${stationuuid}`;
+            `${basePath}/listen/${stCountry && generateSlug(stCountry) + '-'}${generateSlug(stName)}-uuid-${stationuuid}`;
 
           return (
             <li className="station-item" key={stationuuid}>
