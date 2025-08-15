@@ -17,7 +17,7 @@ export const generateMetadata = async ({ params }) => {
     applicationName: 'Legendary Radio',
     generator: 'Next.js 14',
     title: {
-      default: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name),
+      default: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country).replace('{{tag}}', station[0].tags.split(',')[0] === 'music' ? station[0].tags.split(',')[1] : station[0].tags.split(',')[0]) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name).replace('{{tag}}', station[0].tags.split(',')[0] === 'music' ? station[0].tags.split(',')[1] : station[0].tags.split(',')[0]),
       template: '%s | Legendary Radio',
     },
     description: langJSON.translations.en.metaDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
@@ -31,7 +31,7 @@ export const generateMetadata = async ({ params }) => {
       },
     },
     openGraph: {
-      title: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name),
+      title: station[0].country ? langJSON.translations.en.metaTitleListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country).replace('{{tag}}', station[0].tags.split(',')[0] === 'music' ? station[0].tags.split(',')[1] : station[0].tags.split(',')[0]) : langJSON.translations.en.metaTitleListenNotCountry.replace('{{name}}', station[0].name).replace('{{tag}}', station[0].tags.split(',')[0] === 'music' ? station[0].tags.split(',')[1] : station[0].tags.split(',')[0]),
       description: langJSON.translations.en.metaOGDescListen.replace('{{name}}', station[0].name).replace('{{country}}', station[0].country),
       url: `${conf.baseUrl}/listen/${params.name}`,
       siteName: 'Legendary Radio',

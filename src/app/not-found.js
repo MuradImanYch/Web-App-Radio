@@ -2,7 +2,7 @@ import Image from 'next/image';
 import ico from '../../public/assets/ico/not-found-disc.png';
 import Link from 'next/link';
 
-const notFound = () => {
+const NotFound = () => {
     return (
         <div className='not-found'>
             <h1>Page not found | 404</h1>
@@ -12,4 +12,4 @@ const notFound = () => {
     );
 };
 
-export default notFound;
+export default NotFound;
